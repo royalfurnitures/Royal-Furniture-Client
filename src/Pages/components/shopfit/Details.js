@@ -245,15 +245,16 @@ export default function Details() {
      </Container> */}
       
       <Container>
-      <div className="title-container">
+          {/* <div className="title-container">
             <div className="gold-line"></div>
             <h1 className="title gilroyBold text-r-tvoi text-xl md:text-2xl lg:text-4xl  text-justify"> Modular: Transforming Aspirations into Inspirational Workspaces.</h1>
             </div>
             <h5 className="mb-8 text-sm sm:text-xl text-justify gilroyMedium">Royal Furnitures, with its distinctive service 'Modular,' is your trusted partner in workplace interior design. Our talented team specializes in designing effective and elegant workplace environments that boost productivity and represent professionalism. We 
-            prioritize layout optimization, excellent material selection, and design within your budget. Allow Royal Modular to transform your workplace into a smart, efficient, and exciting environment that increases morale and wows clients. Elevate the look of your office with Royal, where utility meets elegance.</h5>
+            prioritize layout optimization, excellent material selection, and design within your budget. Allow Royal Modular to transform your workplace into a smart, efficient, and exciting environment that increases morale and wows clients. Elevate the look of your office with Royal, where utility meets elegance.</h5> */}
 
-
+          <div className='mt-5'>
            <SlideImages images1={photos} />
+           </div>
      
    
       

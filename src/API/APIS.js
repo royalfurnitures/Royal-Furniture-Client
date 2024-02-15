@@ -1,6 +1,6 @@
 import axios from 'axios';
-let BASE_URL = "http://localhost:7878";
-// let BASE_URL = "https://royalfurnitures.onrender.com"
+// let BASE_URL = "http://localhost:7878";
+let BASE_URL = "https://royalfurnitures.onrender.com"
 
 let localurl = "http://localhost:3000";
 let liveurl = "https://royalfurniturestesting.netlify.app";

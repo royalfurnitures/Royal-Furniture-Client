@@ -35,11 +35,11 @@ export default function Landing() {
         />
         <div className="absolute inset-0 grid h-full w-full items-end justify-center bg-gradient-to-t from-r-voi to-transparent to-50%">
          <div className="justify-center align-center ">
-          <h1 className="montserratEBold text-r-gold mt-[20%] sm:mt-[20%] md:mt-[30%] lg:mt-0 text-3xl sm:text-4xl md:text-5xl lg:text-9xl " style={{textAlign: "center"}}>MODULAR</h1>
+          <h1 className="montserratEBold text-r-gold mt-[23%] sm:mt-[25%] md:mt-[30%] lg:mt-0 text-3xl sm:text-4xl md:text-5xl lg:text-9xl " style={{textAlign: "center"}}>MODULAR</h1>
             <Typography
               variant="h1"
               color="white"
-              className="mb-24 text-sm sm:text-xl md:text-2xl lg:text-3xl text-center gilroyBold"
+              className="mb-10 text-sm sm:text-xl md:text-2xl lg:text-3xl text-center gilroyBold"
             >
               Office Interior - Designing Spaces that Energize Workflows
             </Typography>

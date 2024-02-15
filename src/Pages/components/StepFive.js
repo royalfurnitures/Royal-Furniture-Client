@@ -46,9 +46,9 @@ export default function StepFive({title , subtitle , link}) {
             <h3 className='text-center gilroyMedium text-r-tvoi steps-sub text-lg md:text-xl lg:text-3xl'>{subtitle}</h3>
             <div className='grid grid-cols-10'>
                 {cards.map((step, index) => (
-                <div className='flex items-center justify-center flex-col gap-2 my-[10px] md:my-[100px] col-span-10 md:col-span-2' key={index}>
-                   <img className='w-[200px] md:w-[80%]' src={step.img} />
-                    <div>
+                <div className='flex items-center md:h-[300px] justify-center flex-col gap-2 my-[10px] md:my-[100px] col-span-10 md:col-span-2' key={index}>
+                   <img className=' w-[200px] md:w-[80%]  md:h-[200px]  ' src={step.img} />
+                    <div className='md:h-[100px]'>
                         <h1 className='text-r-tvoi gilroyBold text-xl md:text-2xl lg:text-4xl  text-center'>{step.text}</h1>
                         <h1 className='text-r-tvoi gilroyMedium text-sm md:text-md lg:text-xl  text-center'>{step.des}</h1>
                     </div>

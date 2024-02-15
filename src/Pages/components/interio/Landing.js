@@ -33,11 +33,11 @@ export default function Landing() {
         />
         <div className="absolute inset-0 grid h-full w-full items-end justify-center bg-gradient-to-t from-r-voi to-transparent to-50%">
         <div className="justify-center align-center cor-int-part ">
-          <h1 className="montserratEBold mt-[35%] sm:mt-[40%] md:mt-[50%] lg:mt-0 text-3xl sm:text-4xl md:text-5xl lg:text-9xl  text-r-gold" style={{textAlign: "center"}}>INTERIO</h1>
+          <h1 className="montserratEBold mt-[40%] sm:mt-[50%] md:mt-[50%] lg:mt-0 text-3xl sm:text-4xl md:text-5xl lg:text-9xl  text-r-gold" style={{textAlign: "center"}}>INTERIO</h1>
             <Typography
               variant="h1"
               color="white"
-              className="mb-24 text-sm sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-center gilroyBold"
+              className="mb-10 text-sm sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-center gilroyBold"
             >
               Master the art of living like the Royals
               {/* Home Interior - Bringing Your Home's Story to Life Through Design */}

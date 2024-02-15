@@ -105,7 +105,7 @@ export default function IntHow() {
 
   return (
     <>
-    <div className="relative h-full w-full" style={{height: "80vh"}}>
+    <div className="relative h-[40vh] md:h-[80vh] w-full">
         <img
           src={how}
           alt="image 3"
@@ -113,14 +113,13 @@ export default function IntHow() {
         />
         <div className="absolute inset-0 grid h-full w-full items-end justify-center bg-gradient-to-t from-r-tvoi to-transparent to-50%">
           <div className="justify-center align-center">
-            <Typography
-              variant="h1"
-              color="white"
-              className="mb-8 text-xl md:text-4xl lg:text-5xl gilroyEBold text-center"
-              style={{lineHeight: "40px"}}
+            <div
+             
+              className=" mb-3 md:pb-8 px-2 text-white text-xl md:text-4xl lg:text-5xl gilroyEBold text-center"
+              style={{lineHeight: "30px"}}
             >
               Unlock the Potential of Stunning Environments
-            </Typography>
+            </div>
           </div>
         </div>
     </div>
