@@ -71,10 +71,10 @@ export default function Footer() {
               <img src={flogo} className='flogo w-full' />
             </div>
             <div className=' w-[100%] flex items-center justify-center md:justify-start mt-3'>
-                <a href='https://facebook.com/' target='_blank'><img className='m-[10px] h-[15px]  sm:h-[15px] ' src={fb} /></a>
+                <a href='https://www.facebook.com/RoyalFurn.in/' target='_blank'><img className='m-[10px] h-[15px]  sm:h-[15px] ' src={fb} /></a>
                 <a href='https://instagram.com/' target='_blank'><img className='m-[10px] h-[15px]  sm:h-[15px]' src={ins} /></a>
-                <a href='https://youtube.com/' target='_blank'><img className='m-[10px] h-[15px]  sm:h-[15px]' src={yt} /></a>
-                <a href='https://twitter.com/' target='_blank'><img className='m-[10px] h-[15px]  sm:h-[15px]' src={t} /></a>
+                <a href='https://www.youtube.com/channel/UCOYKEWcJcF7_43a3y8o2yDA' target='_blank'><img className='m-[10px] h-[15px]  sm:h-[15px]' src={yt} /></a>
+                <a href='https://twitter.com/royalfurn1' target='_blank'><img className='m-[10px] h-[15px]  sm:h-[15px]' src={t} /></a>
               </div>
           </div>
         </div>
