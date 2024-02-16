@@ -226,7 +226,7 @@ export default function Details() {
             </h5>
      
      
-         <SlideImages images1={photos}/>
+         <SlideImages images1={photos} link="edufurn"/>
 
            
 

@@ -58,7 +58,7 @@ export default function Router() {
     <Routes>
         <Route path='/'  element={<Home />} />
         <Route path='/:PageName/howitworks'  element={<IntHow />} />
-        <Route path='/designideas'  element={<Designideas />} />
+        <Route path='/designideas/:tabdata/:pagetype'  element={<Designideas />} />
         <Route path='/interio'  element={<Interio />} />
         <Route path='/magazine'  element={<Magazine />} />
         <Route path='/modular'  element={<Modular />} />

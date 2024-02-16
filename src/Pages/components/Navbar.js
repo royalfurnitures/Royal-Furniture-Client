@@ -366,11 +366,9 @@ export default function ComplexNavbar() {
   const [openalert,setOpenalert] = useState(false);
   const handlealertOpen = ()=> setOpenalert((cur) => !cur);
 
+
   const RegisterHandler = async (e)=>{
-                     e.preventDefault();
-                     
-                         
-                      
+                     e.preventDefault();  
                       //  console.log("register handler !!!");
                        let data = {
                         Name:name,
@@ -407,6 +405,10 @@ export default function ComplexNavbar() {
   }, []);
  
   const mobilemenu = () => setIsNavOpen((cur) => !cur);
+
+
+
+
 
   return (
     <>

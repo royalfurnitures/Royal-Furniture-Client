@@ -239,7 +239,7 @@ export default function Details() {
             <h5 className="mb-8 text-sm sm:text-xl text-justify gilroyMedium">With great pride, Royal Furn introduces 'MediFurn,' our specialized service aimed at improving hospital interiors. Our goal with MediFurn is to create healing environments where staff productivity and patient comfort come first.Our skilled team carefully considers utility, hygienic practices, and aesthetics when designing hospital rooms, waiting areas, and office spaces. We make sure that every element of the interior promotes the health of patients and medical staff because we recognize the vital role that healthcare facilities. Hospitals are transformed into places of care, comfort, and functionality by Royal MediFurn, fostering the best outcomes for both staff and patients.
            </h5>
 
-            <SlideImages images1={photos}  />
+            <SlideImages images1={photos} link="medifurn"  />
      
            
       <StepFive link="medifurn"  title='Revolutionizing the healthcare spaces with Royal aesthetics' subtitle='A 5-Step Interior Design Journey!' />

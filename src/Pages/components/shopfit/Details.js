@@ -253,7 +253,7 @@ export default function Details() {
             prioritize layout optimization, excellent material selection, and design within your budget. Allow Royal Modular to transform your workplace into a smart, efficient, and exciting environment that increases morale and wows clients. Elevate the look of your office with Royal, where utility meets elegance.</h5> */}
 
           <div className='mt-5'>
-           <SlideImages images1={photos} />
+           <SlideImages images1={photos} link="shopfit" />
            </div>
      
    

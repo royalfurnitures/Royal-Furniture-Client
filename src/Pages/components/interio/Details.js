@@ -208,7 +208,7 @@ return (
             <div className="gold-line"></div>
             <h1 className="text-xl md:text-2xl lg:text-4xl text-justify gilroyBold  text-r-tvoi"> Get started on your design journey, with selected inspiration.</h1>
             </div>        
-    <SlideImages images1={photos} />    
+    <SlideImages images1={photos} link="interio" />    
     {/* <SlideImages images1={images1} />     */}
     </Container>
     <WhyRoyal/>
