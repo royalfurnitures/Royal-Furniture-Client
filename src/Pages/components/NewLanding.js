@@ -329,6 +329,7 @@ function NewLanding() {
     <div className='flex flex-col md:flex-row h-[94vh]  '>
        <div className="w-[100%] md:w-[20%] h-[20%] md:h-[100%] bg-black  relative">
         <div className="h-[100%]">
+        <Link to="/interio" className="block md:hidden bg-transparent absolute top-0 bottom-0 left-0 right-0 z-50" ></Link>
        <img className='w-[100%] h-[100%] object-cover  ' loading="lazy" src={img1}/>
         <div className="absolute w-[100%]   bottom-0 h-[80px] md:h-[250px] bg-gradient-to-t from-black to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 text-white">
@@ -344,6 +345,7 @@ function NewLanding() {
         </div>       
         <div className="w-[100%] md:w-[20%] h-[20%] md:h-[100%] bg-black  relative">
         <div className="h-[100%]">
+        <Link to="/edufurn" className="block md:hidden bg-transparent absolute top-0 bottom-0 left-0 right-0 z-50" ></Link>
        <img className='w-[100%] h-[100%] object-cover  ' loading="lazy" src={img2}/>
         <div className="absolute w-[100%]   bottom-0 h-[80px] md:h-[250px]  bg-gradient-to-t from-black to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 text-white">
@@ -359,6 +361,7 @@ function NewLanding() {
         </div>       
         <div className="w-[100%] md:w-[20%] h-[20%] md:h-[100%] bg-black  relative">
         <div className="h-[100%]">
+        <Link to="/medifurn" className="block md:hidden bg-transparent absolute top-0 bottom-0 left-0 right-0 z-50" ></Link>
        <img className='w-[100%] h-[100%] object-cover  ' loading="lazy" src={img3}/>
         <div className="absolute w-[100%]   bottom-0 h-[80px] md:h-[250px]  bg-gradient-to-t from-black to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 text-white">
@@ -373,6 +376,7 @@ function NewLanding() {
         </div>       
         <div className="w-[100%] md:w-[20%] h-[20%] md:h-[100%] bg-black  relative">
         <div className="h-[100%]">
+        <Link to="/modular" className="block md:hidden bg-transparent absolute top-0 bottom-0 left-0 right-0 z-50" ></Link>
        <img className='w-[100%] h-[100%] object-cover  ' loading="lazy" src={img4}/>
         <div className="absolute w-[100%]   bottom-0 h-[80px] md:h-[250px]  bg-gradient-to-t from-black to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 text-white">
@@ -388,6 +392,7 @@ function NewLanding() {
         </div>        
         <div className="w-[100%] md:w-[20%] h-[20%] md:h-[100%] bg-black  relative">
         <div className="h-[100%]">
+        <Link to="/shopfit" className="block md:hidden bg-transparent absolute top-0 bottom-0 left-0 right-0 z-50" ></Link>
        <img className='w-[100%] h-[100%] object-cover  ' loading="lazy" src={img5}/>
         <div className="absolute w-[100%]   bottom-0 h-[80px] md:h-[250px]  bg-gradient-to-t from-black to-transparent"></div>
         <div className="absolute bottom-0  left-0 right-0 text-white">

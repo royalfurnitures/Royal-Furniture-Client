@@ -12,11 +12,11 @@ import FrontPage from './components/commercial/FrontPage';
 export default function Home() {
   const [isloading,setIsloading] = useState(true);
 
-  useEffect(()=>{
-    setIsloading(true);
-       setTimeout(()=>{setIsloading(false)},3000)
-  },[])
+  useEffect(() => {
+    window.scrollTo({top: 0, left: 0, behavior: 'instant'});
+  }, []);
 
+  
   return (
     <>
    
