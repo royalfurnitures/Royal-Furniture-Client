@@ -20,7 +20,8 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
   const [videoUrl, setVideoUrl] = useState('');
   const [VideoID, setVideoID] = useState( editdata ? editdata.YoutubeVideoID : '');
   const [Videos, setVideos] = useState([]);
-  const [error, setError] = useState(''); 
+  const [error, setError] = useState('');
+  const [category, setCategory] = useState(editdata ? editdata.Category : ''); 
 
   // Function to handle fetching video based on the YouTube URL
   const handleGetVideo = async () => {
@@ -35,11 +36,15 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
     }
   };
 
+  const handleCategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
+
   // Function to handle adding video with the provided title and YouTube URL
   const handleAddVideo = async () => {
-    if (title && VideoID) {
+    if (title && VideoID && category) {
       setError('');
-      let result = await createVideo(VideoID, title);
+      let result = await createVideo(VideoID, title , category);
       console.log("result", result);
 
       // Handle logic based on the result of adding the video
@@ -56,9 +61,9 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
   };
 
   const handleupdateVideo = async () => {
-    if (title && VideoID) {
+    if (title && VideoID && category) {
       setError('');
-      let result = await updateVideo({id:editdata._id ,VideoID, title});
+      let result = await updateVideo({id:editdata._id ,VideoID, title,Category:category});
       console.log("result", result);
 
       // Handle logic based on the result of adding the video
@@ -101,11 +106,23 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
                 value={title}
                 onChange={(e) => settitle(e.target.value)}
                 style={{ marginBottom: '20px' }}
+                inputProps={{ maxLength: 90 }}
               />
+            </Grid>
+            <Grid item xs={12}>
+            <select value={category} onChange={handleCategoryChange} className='w-[100%] h-[60px] border rounded-[10px]'>
+             <option> --Select a Option-- </option>
+             <option>Interio</option>
+             <option>Modular</option>
+             <option>EduFurn</option>
+             <option>MediFurn</option>
+             <option>Shopfit</option>
+          </select>
             </Grid>
 
             <Grid item xs={9}>
               {/* YouTube Video URL input */}
+              
               <TextField
                 label="YouTube Video URL * "
                 variant="outlined"
@@ -113,6 +130,7 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
                 value={videoUrl}
                 onChange={(e) => setVideoUrl(e.target.value)}
                 style={{ marginBottom: '20px' }}
+                
               />
             </Grid>
 
@@ -127,7 +145,7 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
               {/* Button to add the video with the provided details */}
               {
                 iscreate ?
-              <Button variant="contained" color="success" onClick={handleAddVideo} disabled={!VideoID || !title}>
+              <Button variant="contained" color="success" onClick={handleAddVideo} disabled={!VideoID || !title ||!category}>
                 Add
               </Button>
               :
@@ -135,7 +153,7 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
                }
                 {
                 isedit ?
-              <Button variant="contained" color="success" onClick={handleupdateVideo} disabled={!VideoID || !title}>
+              <Button variant="contained" color="success" onClick={handleupdateVideo} disabled={!VideoID || !title ||!category}>
                 Save
               </Button>
               :

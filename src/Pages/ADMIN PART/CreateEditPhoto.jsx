@@ -151,6 +151,7 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
           onChange={handleTextChange}
           fullWidth
           margin="normal"
+          inputProps={{ maxLength: 40 }}
         />
 
         {/* File Upload Input */}

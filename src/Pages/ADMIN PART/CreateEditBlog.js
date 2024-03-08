@@ -11,9 +11,10 @@ import CropSection from './CropSection';
 import { BsTrashFill } from 'react-icons/bs';
 import { edufurn, interior, medifurn, modular, shopfit } from "../components/designIdeas/data";
 import { IoMdClose } from 'react-icons/io';
+import FrontPage from '../components/commercial/FrontPage';
 
 // Functional component for image upload functionality
-const CreateEditBlog = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHandler , editdata ,iscreate ,isedit, Datahandler ,tab}) => {
+const CreateEditBlog = ({ categorylists ,isEdu , isInterio , isMedi , isModu , isShop ,openHandler , editdata ,iscreate ,isedit, Datahandler ,tab}) => {
   // State variables for managing selected files, upload errors, uploaded images, title, blob URLs, and loading state
   const [selectFiles1, setSelectFiles1] = useState([]);
   const [selectFiles2, setSelectFiles2] = useState([]);
@@ -270,6 +271,7 @@ const RemovePointsFromSubSection = (data)=>{
 }
 
 console.log("main content2",mainContent2);
+console.log("Categories list",categorylists);
   // JSX for rendering the image upload form
   return (
     <Fragment>
@@ -285,6 +287,7 @@ console.log("main content2",mainContent2);
         :
         null
       }
+      
     <div className='bg-black opacity-30 z-30 fixed w-full top-0 bottom-0 left-0 right-0'></div>
 
     <div className='bg-white h-[90vh] overflow-y-scroll rounded-[20px] top-10 z-30 fixed   bottom-10 left-10 right-10' style={{backgroundColor:"white"}}>
@@ -297,7 +300,7 @@ console.log("main content2",mainContent2);
           <select className='w-[100%] border h-[60px] mt-3 p-2' value={subType} onChange={(e)=>setSubType(e.target.value)}>
             <option>--Select a Category--</option>
             {
-            subTYPE.length> 0 && subTYPE.map(item=><option value={item.Name} >{item.Name}</option>)
+            categorylists.length> 0 && categorylists.map(item=><option value={item.Title} >{item.Title}</option>)
             }
             
           </select>

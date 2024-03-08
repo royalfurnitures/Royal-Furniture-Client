@@ -94,7 +94,7 @@ const [photos,setPhotos] = useState(false);
    },[])
    const getallphotos = async()=>{
     let AllPhotos = await GetAllModulesPhotoHandler("Interio");
-    // console.log("Allphotos",AllPhotos);
+    console.log("Allphotos",AllPhotos);
     setPhotos(AllPhotos.data)
    }
   
@@ -208,14 +208,14 @@ return (
             <div className="gold-line"></div>
             <h1 className="text-xl md:text-2xl lg:text-4xl text-justify gilroyBold  text-r-tvoi"> Get started on your design journey, with selected inspiration.</h1>
             </div>        
-    <SlideImages images1={photos} link="interio" />    
+    <SlideImages images1={photos} link="Interio" />    
     {/* <SlideImages images1={images1} />     */}
     </Container>
     <WhyRoyal/>
-    <ClientPrev title="The voice of our clients echoes in their 
+    <ClientPrev moduleName="Interio" title="The voice of our clients echoes in their 
      testimonials." />
     <StepFive  link="interio" title="Five steps to your dream home!" subtitle="Looking to design your home interiors? Here’s how you can get started." />
-    <Prev />
+    <Prev moduleName="Interio"  />
     <Bottom />
     <Footer />
     </>

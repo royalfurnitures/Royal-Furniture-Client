@@ -7,6 +7,11 @@ import img4 from "../.././assets/image/card/edu/hos.webp";
 import PhotoCreate from "./PhotoCreator";
 import { DeleteGalleryAPIHandler, GetAllPhotoHandler, ModulesDeleteGalleryAPIHandler } from '../../API/APIS';
 import CreateEditPhoto from './CreateEditPhoto';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { Button, CardActionArea, CardActions } from '@mui/material';
 
 let data = [      
            {
@@ -89,17 +94,33 @@ const DisplayPart = ({ isEdu , isInterio , isMedi , isModu , isShop , data ,Data
           <div className='grid grid-cols-12 overflow-y-scroll h-[80vh] gap-[10px]'>
              {data?.length > 0 && data?.map(item=>
               <div className='col-span-12 md:col-span-6 lg:col-span-3'>
-                 <div className='border p-4 rounded-lg'>
-
-                    <img src={item?.Images[0].URL}/> 
-                    <div className='mt-3 font-semibold'>{item.Title}</div>
-                    
-                        <div className='grid grid-cols-12 pt-4 gap-[10px]'>
-                             <div className='col-span-6 text-end'><button className='bg-red-500 px-2 py-1 rounded text-white' onClick={()=>{DeleteHandler(item._id)}}>Delete</button></div>
-                             <div className='col-span-6 text-start'><button className='bg-green-500 px-2 py-1 rounded text-white' onClick={()=>{setEditData(item);Edithandler()}}>Edit</button></div>                            
-                        </div>
-                      
-                 </div>
+                  <Card sx={{ maxWidth: 345 }}>
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          height="140"
+          image={item.Images[0].URL}
+          alt="green iguana"
+        />
+        <CardContent>
+          {/* <Typography gutterBottom variant="h5" component="div">
+            Lizard
+          </Typography> */}
+          <Typography variant="body2" color="text.secondary">
+           {item.Title}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size="small" color="warning" onClick={()=>{DeleteHandler(item._id)}}>
+          Delete
+        </Button>
+        <Button size="small" color="primary" onClick={()=>{setEditData(item);Edithandler()}}>
+          Edit
+        </Button>
+        
+      </CardActions>
+    </Card>
              </div>)}
           </div>
         </div>

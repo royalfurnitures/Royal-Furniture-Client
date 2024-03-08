@@ -109,7 +109,7 @@ export default function Details() {
    },[])
    const getallphotos = async()=>{
     let AllPhotos = await GetAllModulesPhotoHandler("EduFurn");
-    // console.log("Allphotos",AllPhotos);
+    console.log("Allphotos",AllPhotos);
     setPhotos(AllPhotos.data)
    }
  
@@ -226,7 +226,7 @@ export default function Details() {
             </h5>
      
      
-         <SlideImages images1={photos} link="edufurn"/>
+         <SlideImages images1={photos} link="EduFurn"/>
 
            
 
@@ -251,9 +251,9 @@ export default function Details() {
       </Dialog>
     </Container >
     <WhyRoyal/>
-    <ClientPrev title="The voice of our clients echoes in their 
+    <ClientPrev moduleName="EduFurn" title="The voice of our clients echoes in their 
      testimonials." />
-    <Prev />
+    <Prev moduleName="EduFurn" />
     <div className='px-3'>
     <Touch image={edu} />
        

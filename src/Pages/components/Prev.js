@@ -163,7 +163,7 @@ import {
 
   
 
-export default function Prev() {
+export default function Prev({moduleName}) {
     const sliderRef = React.useRef(null);
     const [images,setImages] = useState([]);
     const [posts,setPosts] = useState(data);
@@ -207,7 +207,7 @@ export default function Prev() {
     getallphotos();
    },[])
    const getallphotos = async()=>{
-    let AllPhotos = await GetAllPhotoHandler();
+    let AllPhotos = await GetAllPhotoHandler(moduleName);
     console.log("Allphotos",AllPhotos);
     setPhotos(AllPhotos.data)
    }

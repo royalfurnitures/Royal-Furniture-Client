@@ -17,6 +17,7 @@ const ImageUpload = ({openHandler , editdata ,iscreate ,isedit, Datahandler}) =>
   const [uploadError, setUploadError] = useState(null);
   const [uploadImages, setUploadImages] = useState(editdata ? editdata.Images : []);
   const [title, setTitle] = useState(editdata ?  editdata.Title :"");
+  const [category, setCategory] = useState(editdata ?  editdata.Category :"");
   const [bloburls, setBlobUrls] = useState([]);
   const [loading, setLoading] = useState(false);
   const [Photo,setPhoto] = useState('');
@@ -58,6 +59,9 @@ const ImageUpload = ({openHandler , editdata ,iscreate ,isedit, Datahandler}) =>
   const handleTextChange = (event) => {
     setTitle(event.target.value);
   };
+  const handleCategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
 
   // Function to handle the upload of photos
   const UploadPhotosHandler = async () => {
@@ -98,7 +102,8 @@ const ImageUpload = ({openHandler , editdata ,iscreate ,isedit, Datahandler}) =>
     // Create data object with uploaded images and title
     let data = {
       Images: uploadImages,
-      Title: title
+      Title: title,
+      Category:category
     };
 
     // Call the PublishAPIHandler function to publish data
@@ -113,7 +118,8 @@ const ImageUpload = ({openHandler , editdata ,iscreate ,isedit, Datahandler}) =>
     let data = {
       id:editdata._id,
       Images: uploadImages,
-      Title: title
+      Title: title,
+      Category:category
     };
 
     // Call the PublishAPIHandler function to publish data
@@ -152,6 +158,14 @@ const ImageUpload = ({openHandler , editdata ,iscreate ,isedit, Datahandler}) =>
           <button className='absolute right-[20px] font-bold text-[30px]  text-gray-500' onClick={openHandler}><IoMdClose/></button>
         </div>
         <div>
+          <select value={category} onChange={handleCategoryChange} className='w-[100%] h-[60px] border rounded-[10px]'>
+             <option> --Select a Option-- </option>
+             <option>Interio</option>
+             <option>Modular</option>
+             <option>EduFurn</option>
+             <option>MediFurn</option>
+             <option>Shopfit</option>
+          </select>
         <TextField
           label="Title"
           variant="outlined"
@@ -159,6 +173,7 @@ const ImageUpload = ({openHandler , editdata ,iscreate ,isedit, Datahandler}) =>
           onChange={handleTextChange}
           fullWidth
           margin="normal"
+          inputProps={{ maxLength: 30 }}
         />
 
         {/* File Upload Input */}

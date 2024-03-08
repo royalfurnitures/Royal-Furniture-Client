@@ -36,7 +36,7 @@ let value = { url : url }
 try {
    const response = await fetch(`${BASE_URL}/api/youtube/GetVideoID`,options); //call api ,POST Method
    const data = await response.json(); //and parse the response as JSON
-   // console.log(data);
+   // console.log(data);  
    return data; //return data 
 } catch (error) {
    console.error('Error fetching data from API:', error);
@@ -48,11 +48,12 @@ throw error;
 // SO.2
 //  Create a Video  , with Title and Video ID 
 // start createVideo handler
-export const createVideo = async(videoid,Title)=>{
+export const createVideo = async(videoid,Title,category)=>{
     // Declare Value its contain Youtube Video ID and User Given Title 
     let value = {
         VideoID : videoid,
-        title:Title
+        title:Title,
+        Category:category
         }
 // Declare and initiate value for options 
 // This options used in Fetch method
@@ -120,9 +121,10 @@ try {
 
 // SO.3
 // Get Youtube videos data from video data stored in backend
-export const  GetallYoutubeVideos = async()=>{
+export const  GetallYoutubeVideos = async(query)=>{
     try {
-        const response = await fetch(`${BASE_URL}/api/youtube/getvideodata`,{method:"GET"});//call api ,GET Method 
+        console.log("query",query);
+        const response = await fetch(`${BASE_URL}/api/youtube/getvideodata/${query}`,{method:"GET"});//call api ,GET Method 
         const data = await response.json(); 
         // console.log(data);
            return data;
@@ -260,10 +262,11 @@ catch(error){
 
 // SO.7
 // Exporting a function named GetAllPhotoHandler that retrieves all photo posts from a specific API endpoint
-export const GetAllPhotoHandler = async ()=>{
+export const GetAllPhotoHandler = async (query)=>{
+    console.log("query",query);
     try{
          // Make a GET request to the specified API endpoint and parse the response as JSON
-        const response = await fetch(`${BASE_URL}/api/gallery/get-all-post`,{method:"GET"}).then(res=>res.json());
+        const response = await fetch(`${BASE_URL}/api/gallery/get-all-post/${query}`,{method:"GET"}).then(res=>res.json());
         // Return the parsed response
         return response ;      
     }
@@ -449,7 +452,7 @@ catch(error){
 
 // SO.7
 // Exporting a function named GetAllPhotoHandler that retrieves all photo posts from a specific API endpoint
-export const GetAllModulesPhotoHandler = async (type)=>{
+export const GetAllModulesPhotoHandler = async (type,query)=>{
     try{
         let APIType = "" ;
       if(type === "Interio"){ APIType = "interiogallery" }
@@ -458,7 +461,7 @@ export const GetAllModulesPhotoHandler = async (type)=>{
       if(type === "EduFurn"){ APIType = "edufurngallery" }
       if(type === "Shopfit"){ APIType = "shopfitgallery" }
          
-        const response = await fetch(`${BASE_URL}/api/${APIType}/get-all-post`,{method:"GET"}).then(res=>res.json());
+        const response = await fetch(`${BASE_URL}/api/${APIType}/get-all-post/${query}`,{method:"GET"}).then(res=>res.json());
         return response ;      
     }
     catch(error){
@@ -563,9 +566,9 @@ catch(error){
 }
 
 export const  GetBlogByModuleAndCategoryAPIHandler = async (module,type)=>{
-    console.log("data",module,type);
+     console.log("data",module,type);
 try{
-     
+
     const response = await fetch(`${BASE_URL}/api/blog/get-blog-by-modules-and-category/${module}/${type}`,{method:"GET"}).then(res=>res.json());
     // Return the parsed response
     return response ;      

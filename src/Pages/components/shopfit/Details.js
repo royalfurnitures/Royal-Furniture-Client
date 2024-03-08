@@ -253,7 +253,7 @@ export default function Details() {
             prioritize layout optimization, excellent material selection, and design within your budget. Allow Royal Modular to transform your workplace into a smart, efficient, and exciting environment that increases morale and wows clients. Elevate the look of your office with Royal, where utility meets elegance.</h5> */}
 
           <div className='mt-5'>
-           <SlideImages images1={photos} link="shopfit" />
+           <SlideImages images1={photos} link="Shopfit" />
            </div>
      
    
@@ -281,9 +281,9 @@ export default function Details() {
     </Container>
     <WhyRoyal/>
     {/* <ClientPrev title="Let our clients tell their story" /> */}
-    <ClientPrev title="The voice of our clients echoes in their 
+    <ClientPrev moduleName="Shopfit" title="The voice of our clients echoes in their 
 testimonials." />
-    <Prev/>    
+    <Prev moduleName="Shopfit" />    
     <div className='px-3'>
     <Touch image={modt} />
     </div>

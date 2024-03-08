@@ -91,7 +91,7 @@ export const ClientPrev = (props) => {
   };
 
   const GetAllVideos = async ()=>{
-        let data = await GetallYoutubeVideos();
+        let data = await GetallYoutubeVideos(props.moduleName);
         setAllVideos(data.data);
   } 
 

@@ -20,8 +20,8 @@ import Touch from "../commercial/Touch";
 import Footer from "../Footer";
 import Bottom from "../Bottom";
 import modt from "../../../assets/image/bg/mod.webp"
-import { GetBlogByModuleAndCategoryAPIHandler } from "../../../API/APIS";
-
+import { GetAllModulesPhotoHandler, GetBlogByModuleAndCategoryAPIHandler } from "../../../API/APIS";
+let SubCategoryForEdufurn = ["Steel","Wood","Steel Plus Wood"] ;
    
 export function Designideas() {
   const [designData,setDesignData] = useState([]);
@@ -30,7 +30,7 @@ export function Designideas() {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [subType, setSubType] = useState('');
-  const [edufurnDivision, setEdufurnDivision] = useState('Steel');
+  const [edufurnDivision, setEdufurnDivision] = useState([]);
   const [blogs, setBlogs] = useState('');
 
   let { pagetype , tabdata } = useParams();
@@ -40,67 +40,42 @@ export function Designideas() {
       }, []);
 
 useEffect(()=>{
-      // console.log(" pagetype , tabdata ",pagetype,tabdata); 
-
-      if(pagetype === "interio"){
-           setDesignData(interior.Tabs)
-           setTitle(interior.Title)
-           setCategory('Interio');
-           setSubType(interior.Tabs[Number(tabdata)]?.Name);
-      }
-      
-      if(pagetype === "edufurn"){
-          setDesignData(edufurn.Tabs)
-          setTitle(edufurn.Title)
-          setCategory('EduFurn');
-          setSubType(edufurn.Tabs[Number(tabdata)]?.Name);
-          setEdufurnDivision(edufurn.Tabs[Number(tabdata)].SubCategory[subvalue]);
-      }
+      console.log(" pagetype , tabdata ",pagetype,tabdata); 
+      GetAllModulesPhotoHandler(pagetype).then(response=>{
+        console.log("ResponseModule",response);
+        setDesignData(response.data);
+        let findindex = response.data.findIndex(state=>state._id == tabdata )
+         console.log("Find index",findindex);
+         setValue(findindex);
+         setCategory(pagetype);
+         setTitle(response.Title);
+         setSubType(tabdata);
+         setSubvalue(0);
+      })
 
       
-      if(pagetype === "medifurn"){
-          setDesignData(medifurn.Tabs)
-          setTitle(medifurn.Title)
-          setCategory('MediFurn');
-          setSubType(medifurn.Tabs[Number(tabdata)]?.Name);
-      }
-
-
-      if(pagetype === "modular"){
-          setDesignData(modular.Tabs)
-          setTitle(modular.Title)
-          setCategory('Modular');
-          setSubType(modular.Tabs[Number(tabdata)]?.Name);
-      }
-
-
-      if(pagetype === "shopfit"){
-          setDesignData(shopfit.Tabs)
-          setTitle(shopfit.Title)
-          setCategory('Shopfit');
-          setSubType(shopfit.Tabs[Number(tabdata)]?.Name);
-      }
-
-           setValue(Number(tabdata));
-             
+      
+      // if(pagetype === "edufurn"){
+      //     setDesignData(edufurn.Tabs)
+      //     setTitle(edufurn.Title)
+      //     setCategory('EduFurn');
+      //     setSubType(tabdata);
+      //     setEdufurnDivision(edufurn.Tabs[Number(tabdata)].SubCategory[subvalue]);
+      // }
+       
   },[])
 
   useEffect(()=>{
-   
-      if(subType){
-      setSubType(designData[value]?.Name);
-      
-      }
-    else{
-      setSubType(designData[value]?.Name);
-    }
+    let finddata = designData[value]?._id
+               setSubType(finddata);
+    // console.log("Find data",finddata);
       // console.log("subtype",designData[Number(tabdata)]?.Name);
-  },[value ,designData])
+  },[value])
 
   
 
   const  GetBlogByModuleAndCategory = async (module,subcategory)=>{
-    // console.log("Moduel Type",category ,subType);
+    console.log("Moduel Type",category ,subType);
     const response = await GetBlogByModuleAndCategoryAPIHandler(module,subcategory)
     // console.log("response",response);
     setBlogs(response.data)
@@ -108,6 +83,7 @@ useEffect(()=>{
   // console.log("subtype",subType,"Category",category);
 
   useEffect(()=>{
+    console.log("category check and subtype check",category,subType)
     if(category && subType)
     GetBlogByModuleAndCategory( category,subType)
   },[category,subType])
@@ -150,8 +126,7 @@ useEffect(()=>{
 
 
     const handleChange = (event, newValue) => {
-      
-    setValue(newValue);
+      setValue(newValue);
     };
 
   const Filterfunction = (query)=>{
@@ -176,8 +151,8 @@ useEffect(()=>{
                 aria-label="scrollable auto tabs example"
             >
               {
-                designData.length >0 && designData.map(item=>
-                <Tab label={item.Name} />
+                designData.length >0 && designData.map((item,index)=>
+                <Tab label={item._id} />
 
                   )
               }
@@ -188,7 +163,7 @@ useEffect(()=>{
                 <TabPanel value={value} index={value} className="m-0 p-0">
                      
                      {
-                      pagetype === "edufurn" ? 
+                      pagetype === "EduFurn" ? 
                       <Fragment>
                       <div className="flex items-center justify-center">
                       <Tabs value={subvalue} onChange={(e, newValue) => { setSubvalue(newValue) ; }}>
@@ -206,7 +181,7 @@ useEffect(()=>{
                         <Card  className="w-full max-w-[26rem] shadow-lg">
                                 <CardHeader floated={false} color="blue-gray">
                                 <img
-                                    src={pic}
+                                    src={item.mainContent1.imageurl[0].URL}
                                     alt="ui/ux review check"
                                 />
                                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
@@ -229,7 +204,7 @@ useEffect(()=>{
                                 <CardBody>
                                 <div className="mb-3 flex items-center justify-between">
                                     <Typography  color="blue-gray" className="text-sm sm:text-xl text-justify gilroyBold">
-                                    Modern L-Shaped Kitchen Design With Pink Backsplash Tiles
+                                    {item.mainContent1.title}
                                     </Typography>
                                     <Typography
                                     color="blue-gray"
@@ -254,7 +229,7 @@ useEffect(()=>{
                          )
                          :
                          <div className="col-span-6">
-                          <div className=" flex items-center justify-center text-[#ff3232e1]">No Data Found</div>
+                          <div className=" flex items-center justify-center text-[#ff3232e1]">This Service Not Available In Steel</div>
                           </div> 
                         }
                        
@@ -269,7 +244,7 @@ useEffect(()=>{
                         <Card  className="w-full max-w-[26rem] shadow-lg">
                                 <CardHeader floated={false} color="blue-gray">
                                 <img
-                                    src={pic}
+                                    src={item.mainContent1.imageurl[0].URL}
                                     alt="ui/ux review check"
                                 />
                                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
@@ -291,8 +266,8 @@ useEffect(()=>{
                                 </CardHeader>
                                 <CardBody>
                                 <div className="mb-3 flex items-center justify-between">
-                                    <Typography  color="blue-gray" className="text-sm sm:text-xl text-justify gilroyBold">
-                                    Modern L-Shaped Kitchen Design With Pink Backsplash Tiles
+                                <Typography  color="blue-gray" className="text-sm sm:text-xl text-justify gilroyBold">
+                                    {item.mainContent1.title}
                                     </Typography>
                                     <Typography
                                     color="blue-gray"
@@ -317,8 +292,8 @@ useEffect(()=>{
                          )
                          :
                          <div className="col-span-6">
-                          <div className=" flex items-center justify-center text-[#ff3232e1]">No Data Found</div>
-                          </div> 
+                          <div className=" flex items-center justify-center text-[#ff3232e1]">This Service Not Available In Wood</div>
+                          </div>
                         }
                        
                     </div>
@@ -355,7 +330,7 @@ useEffect(()=>{
                                 <CardBody>
                                 <div className="mb-3 flex items-center justify-between">
                                     <Typography  color="blue-gray" className="text-sm sm:text-xl text-justify gilroyBold">
-                                    Modern L-Shaped Kitchen Design With Pink Backsplash Tiles
+                                    {item.mainContent1.title}
                                     </Typography>
                                     <Typography
                                     color="blue-gray"
@@ -381,8 +356,8 @@ useEffect(()=>{
                          )
                          :
                          <div className="col-span-6">
-                          <div className=" flex items-center justify-center text-[#ff3232e1]">No Data Found</div>
-                          </div> 
+                         <div className=" flex items-center justify-center text-[#ff3232e1]">This Service Not Available In Steel Plus Wood</div>
+                         </div>
                         }
                        
                     </div>
@@ -445,9 +420,7 @@ useEffect(()=>{
                         </div>
                          )
                          :
-                         <div className="col-span-6">
-                          <div className=" flex items-center justify-center text-[#ff3232e1]">No Data Found</div>
-                          </div> 
+                        null
                         }
                        
                     </div>

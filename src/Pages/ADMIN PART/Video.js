@@ -11,14 +11,19 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Grid from '@mui/material/Grid';
 import VideoCreator from "./VideoCreator";
 import { GetVideoURL, createVideo , GetallYoutubeVideos, deleteVideo } from "../../API/APIS";
+import FrontPage from '../components/commercial/FrontPage';
+import { LiaCertificateSolid } from 'react-icons/lia';
+import {  CardActions } from '@mui/material';
 
 const Video = () => {
   const [isCreate,setIsCreate] = useState(false);
    const [isEdit,setIsEdit] = useState(false);
    const [editData,setEditData] = useState(false);
+   const [loading,setLoading] = useState(false);
   const [Videos, setVideos] = useState([]);
+
   const GetAllVideos = async ()=>{
-    let data = await GetallYoutubeVideos();
+    let data = await GetallYoutubeVideos(null);
     setVideos(data.data);
 } 
 
@@ -26,7 +31,7 @@ useEffect(()=>{
           GetAllVideos();
 },[])
 
-  console.log("data",Videos);
+  // console.log("data",Videos);
 
   const DeleteHandler = async (id) => {
     
@@ -37,7 +42,7 @@ useEffect(()=>{
     GetAllVideos();
     
        
-    console.log("response", response);
+    // console.log("response", response);
   }
 
    const handler = ()=>{
@@ -51,6 +56,11 @@ useEffect(()=>{
     <div className='fixed top-0 bottom-0 left-0 right-0 bg-white z-50'>
       
       <Admin/>
+      {
+        loading ?
+        <FrontPage/>:
+        null
+       }
       {
           isCreate ? 
           <VideoCreator Datahandler={GetAllVideos} iscreate={true} openHandler={handler} />
@@ -66,7 +76,7 @@ useEffect(()=>{
           
          
      <div className='lg:ml-[300px]'>
-     <div className='relative h-[20px] mt-20 mb-20'>
+     <div className='relative h-[20px] mt-10 mb-20'>
              <button className='absolute right-[10px] text-5xl text-white bg-orange-500 px-2  font-bold rounded-lg ' onClick={()=>{setIsCreate(true)}} > + </button>
           </div>
      <div className='grid grid-cols-12 gap-[10px] overflow-y-scroll h-[80vh] p-10'> 
@@ -93,17 +103,28 @@ useEffect(()=>{
               />
                   </CardMedia>
                   <CardContent >
+                      
+                      <Typography gutterBottom variant="h5" component="div">
+                      <span className='flex items-center gap-2'>
+                      <LiaCertificateSolid />{item.Category}
+                      </span>
+                      </Typography>
                       <Typography gutterBottom variant="h7"  component="div"  >
                       <span className='text-r-tvoi gilroyBold'>{item.YoutubeVideoTitle}</span>
                       </Typography>
                       <Typography>
-                        <div className='grid grid-cols-12 pt-4 gap-[10px]'>
-                             <div className='col-span-6 text-end'><button className='bg-red-500 px-2 py-1 rounded text-white' onClick={()=>{DeleteHandler(item._id)}}>Delete</button></div>
-                             <div className='col-span-6 text-start'><button className='bg-green-500 px-2 py-1 rounded text-white' onClick={()=>{setEditData(item);Edithandler()}}>Edit</button></div>                            
-                        </div>
+                        
                       </Typography>
                   </CardContent>
-                  
+                  <CardActions>
+        <Button size="small" color="warning" onClick={()=>{DeleteHandler(item._id)}}>
+          Delete
+        </Button>
+        <Button size="small" color="primary" onClick={()=>{setEditData(item);Edithandler()}}>
+          Edit
+        </Button>
+        
+      </CardActions>
               </Card>
               </div>)
         }

@@ -57,6 +57,7 @@ let output = LoginHandler(options)
   }
 
   return (
+    <div className='fixed z-50 bg-white top-0 left-0 bottom-0 w-[100%]'>
     <CssVarsProvider>
       <main style={{display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh"}}>
         <Sheet
@@ -113,5 +114,6 @@ let output = LoginHandler(options)
         </Sheet>
       </main>
     </CssVarsProvider>
+    </div>
   );
 }

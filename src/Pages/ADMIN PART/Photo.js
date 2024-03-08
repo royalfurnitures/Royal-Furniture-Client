@@ -6,6 +6,13 @@ import img3 from "../.././assets/image/card/edu/comp.webp";
 import img4 from "../.././assets/image/card/edu/hos.webp";
 import PhotoCreate from "./PhotoCreator";
 import { DeleteGalleryAPIHandler, GetAllPhotoHandler } from '../../API/APIS';
+import FrontPage from '../components/commercial/FrontPage';
+import { LiaCertificateSolid } from 'react-icons/lia';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { Button, CardActionArea, CardActions } from '@mui/material';
 
 let data = [      
            {
@@ -35,14 +42,18 @@ const Photo = () => {
    const [isEdit,setIsEdit] = useState(false);
    const [editData,setEditData] = useState(false);
    const [photos,setPhotos] = useState(false);
+   const [loading,setLoading] = useState(false);
+   
 
 
    useEffect(()=>{
     getallphotos();
    },[])
    const getallphotos = async()=>{
-    let AllPhotos = await GetAllPhotoHandler();
-    console.log("Allphotos",AllPhotos);
+    setLoading(true);
+    let AllPhotos = await GetAllPhotoHandler(null);
+    // console.log("Allphotos",AllPhotos);
+    setLoading(false);
     setPhotos(AllPhotos.data)
    }
 
@@ -63,11 +74,19 @@ const Photo = () => {
    const Edithandler = ()=>{
     setIsEdit(!isEdit);
    }
+
+   
+ 
    
 
   return (
     <div className='fixed top-0 bottom-0 left-0 right-0 bg-white z-50'>
         <Admin/>
+        {
+        loading ?
+        <FrontPage/>:
+        null
+       }
         {
           isCreate ? 
           <PhotoCreate Datahandler={getallphotos} iscreate={true} openHandler={handler} />
@@ -80,16 +99,18 @@ const Photo = () => {
           :
           null
         }
+       
         <div className='lg:ml-[300px] p-8'>
           <div className='relative h-[20px] mb-20'>
              <button className='absolute right-[10px] text-5xl text-white bg-orange-500 px-2  font-bold rounded-lg ' onClick={()=>{setIsCreate(true)}} > + </button>
           </div>
-          <div className='grid grid-cols-12 overflow-y-scroll h-[80vh] gap-[10px]'>
+          {/* <div className='grid grid-cols-12 overflow-y-scroll h-[80vh] gap-[10px]'>
              {photos?.length > 0 && photos?.map(item=>
               <div className='col-span-12 md:col-span-6 lg:col-span-3'>
                  <div className='border p-4 rounded-lg'>
                     <img src={item.Images[0].URL}/>
                     <div className='mt-3 font-semibold'>{item.Title}</div>
+                    <div className='mt-3 font-semibold '><span className='flex items-center gap-2'><LiaCertificateSolid />{item.Category}</span></div>
                     
                         <div className='grid grid-cols-12 pt-4 gap-[10px]'>
                              <div className='col-span-6 text-end'><button className='bg-red-500 px-2 py-1 rounded text-white' onClick={()=>{DeleteHandler(item._id)}}>Delete</button></div>
@@ -97,6 +118,40 @@ const Photo = () => {
                         </div>
                       
                  </div>
+             </div>)}
+          </div> */}
+          <div className='grid grid-cols-12 overflow-y-scroll h-[80vh] gap-[10px]'>
+             {photos?.length > 0 && photos?.map(item=>
+              <div className='col-span-12 md:col-span-6 lg:col-span-3'>
+                 <Card sx={{ maxWidth: 345 }}>
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          height="140"
+          image={item.Images[0].URL}
+          alt="green iguana"
+        />
+        <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          <span className='flex items-center gap-2'>
+          <LiaCertificateSolid />{item.Category}
+          </span>
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+           {item.Title}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size="small" color="warning" onClick={()=>{DeleteHandler(item._id)}}>
+          Delete
+        </Button>
+        <Button size="small" color="primary" onClick={()=>{setEditData(item);Edithandler()}}>
+          Edit
+        </Button>
+        
+      </CardActions>
+    </Card>
              </div>)}
           </div>
         </div>

@@ -11,7 +11,7 @@ const Shopfit = () => {
    },[])
 
    const getallphotos = async()=>{
-    let AllPhotos = await GetAllModulesPhotoHandler("Shopfit");
+    let AllPhotos = await GetAllModulesPhotoHandler("Shopfit",null);
     console.log("Allphotos",AllPhotos);
     setPhotos(AllPhotos.data)
    }
