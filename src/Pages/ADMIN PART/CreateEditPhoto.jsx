@@ -7,6 +7,8 @@ import Input from '@mui/material/Input';
 import { DeleteGalleryAPIHandler, handleUpload, ModulesPublishAPIHandler, ModulesUpdateGalleryAPIHandler, PublishAPIHandler , RemoveImageHandler, UpdateGalleryAPIHandler } from '../../API/APIS';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Card, Container } from '@mui/material';
+import CropSection from './CropSection';
+import { IoMdClose } from 'react-icons/io';
 
 // Functional component for image upload functionality
 const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHandler , editdata ,iscreate ,isedit, Datahandler ,type}) => {
@@ -17,13 +19,31 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
   const [title, setTitle] = useState(editdata ?  editdata.Title :"");
   const [bloburls, setBlobUrls] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [Photo,setPhoto] = useState('');
+  const [croppingModel1Open,setCroppingModel1Open] = useState(false);
 
   // Event handler for file input change
   const handleFileChange = async (event) => {
     const files = event.target.files;
-    const blobUrls = await Array.from(files).map((file) => URL.createObjectURL(file));
-    setBlobUrls([...blobUrls]);
-    await setSelectedFiles([...files]);
+    const blobUrls =  URL.createObjectURL(files[0]);
+    let newarray = [...bloburls];
+       newarray.push(blobUrls)
+    setPhoto(blobUrls); 
+    setCroppingModel1Open(true);
+    setBlobUrls(newarray);
+    
+  };
+
+  const handleFilechangeChange = async (cropimg) => {
+    const files = cropimg;
+    // const blobUrls = await Array.from(files).map((file) => URL.createObjectURL(file));
+    // setBlobUrls([...blobUrls]);
+    setCroppingModel1Open(false);
+
+    let newarray =[...selectedFiles];
+        newarray.push(files)
+    console.log("handle change",files);
+    setSelectedFiles(newarray);
   };
 
   // Effect hook to trigger photo upload when selected files change
@@ -40,6 +60,7 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
   // Function to handle the upload of photos
   const UploadPhotosHandler = async () => {
     setLoading(true);
+    
 
     // Call the handleUpload function to upload selected files
     let response = await handleUpload(selectedFiles);
@@ -59,13 +80,14 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
 
   // Function to handle the Remove image from upload 
   const RemoveImagefromupload = async(data)=>{ 
+    setLoading(true);
       const response = await RemoveImageHandler(data);
       console.log("response", response);
       // Assuming uploadimages is your state containing image details   
       const updatedImages = uploadImages.filter(image => !(image.Filename === response.data.Filename && image.Generation === response.data.Generation));
       // Update the state with the modified array
        setUploadImages(updatedImages); // Assuming you have a function like setUploadImages to update the state    
-      
+       setLoading(false);
   }
 
   // Function to handle the publishing of images
@@ -99,19 +121,27 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
     console.log("response", response);
   }
 
-  
+  const handleprofilecancel = ()=>{
+    setCroppingModel1Open(false);
+   }
 
 
   // JSX for rendering the image upload form
   return (
     <Fragment>
+       {
+        croppingModel1Open ? 
+        <CropSection imageSetHandler={handleFilechangeChange} image={Photo} cancelhandler={handleprofilecancel} aspect={1.23}/>
+        :
+        null
+      }
     <div className='bg-black opacity-30 z-30 fixed w-full top-0 bottom-0 left-0 right-0'></div>
 
     <div className='bg-white h-[90vh] rounded-[20px] top-10 z-30 fixed   bottom-10 left-10 right-10' style={{backgroundColor:"white"}}>
       <Container >
         {/* Title Input */}
         <div className='relative py-10 '>
-          <button className='absolute right-[20px] font-bold text-[30px]  text-gray-500' onClick={openHandler}>X</button>
+          <button className='absolute right-[20px] font-bold text-[30px]  text-gray-500' onClick={openHandler}><IoMdClose/></button>
         </div>
         <div>
         <TextField
@@ -146,6 +176,11 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
             {uploadImages.length > 0 && uploadImages.map((imageUrl, index) => (
               <div key={index} style={{ width: '150px', height: 'auto', marginRight: '10px', position: "relative" }} onClick={()=>{RemoveImagefromupload(imageUrl)}}>               
                   <div style={{ position: "relative" }}>
+                  { loading ? 
+                    <div style={{ position: 'absolute', top: "40%", left: "40%" }}><CircularProgress /></div>
+                     :
+                     null
+                    }
                      <div style={{ position: 'absolute', top: "10%", right: "10%" ,backgroundColor:"white",padding:"0px 5px 0px 5px ", color:"red", fontWeight:"bolder",borderRadius:"50%",cursor:"pointer"}}>X</div>
                     <img src={imageUrl.URL} alt={`uploaded-${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                  </div>
@@ -175,7 +210,7 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
         {/* Submit Button */}
         {
           iscreate ?
-        <Button type="submit" variant="contained" color="success" className='my-3' disabled={!uploadImages.length > 0 || !title} onClick={() => { PublishHandler() }}>
+        <Button type="submit" variant="contained" color="success" className='my-3' disabled={!uploadImages.length > 0 || !title || loading} onClick={() => { PublishHandler() }}>
           Publish
         </Button>
         :
@@ -183,7 +218,7 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
         }
          {
           isedit ?
-        <Button type="submit" variant="contained" color="success" className='my-3' disabled={!uploadImages.length > 0 || !title} onClick={() => { UpdateHandler() }}>
+        <Button type="submit" variant="contained" color="success" className='my-3' disabled={!uploadImages.length > 0 || !title || loading} onClick={() => { UpdateHandler() }}>
           Save
         </Button>
         :

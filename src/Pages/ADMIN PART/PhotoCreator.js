@@ -7,6 +7,8 @@ import Input from '@mui/material/Input';
 import { DeleteGalleryAPIHandler, handleUpload, PublishAPIHandler , RemoveImageHandler, UpdateGalleryAPIHandler } from '../../API/APIS';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Card, Container } from '@mui/material';
+import CropSection from './CropSection';
+import { IoMdClose } from 'react-icons/io';
 
 // Functional component for image upload functionality
 const ImageUpload = ({openHandler , editdata ,iscreate ,isedit, Datahandler}) => {
@@ -17,13 +19,33 @@ const ImageUpload = ({openHandler , editdata ,iscreate ,isedit, Datahandler}) =>
   const [title, setTitle] = useState(editdata ?  editdata.Title :"");
   const [bloburls, setBlobUrls] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [Photo,setPhoto] = useState('');
+  const [croppingModel1Open,setCroppingModel1Open] = useState(false);
 
   // Event handler for file input change
   const handleFileChange = async (event) => {
     const files = event.target.files;
-    const blobUrls = await Array.from(files).map((file) => URL.createObjectURL(file));
-    setBlobUrls([...blobUrls]);
-    await setSelectedFiles([...files]);
+    const blobUrls =  URL.createObjectURL(files[0]);
+    let newarray = [...bloburls];
+       newarray.push(blobUrls)
+    setPhoto(blobUrls); 
+    setCroppingModel1Open(true);
+    setBlobUrls(newarray);
+    
+  };
+  console.log("bloblurls",bloburls);
+  console.log("selecturl",selectedFiles);
+
+  const handleFilechangeChange = async (cropimg) => {
+    const files = cropimg;
+    // const blobUrls = await Array.from(files).map((file) => URL.createObjectURL(file));
+    // setBlobUrls([...blobUrls]);
+    setCroppingModel1Open(false);
+
+    let newarray =[...selectedFiles];
+        newarray.push(files)
+    console.log("handle change",files);
+    setSelectedFiles(newarray);
   };
 
   // Effect hook to trigger photo upload when selected files change
@@ -47,7 +69,10 @@ const ImageUpload = ({openHandler , editdata ,iscreate ,isedit, Datahandler}) =>
 
     // Check the response status and update state accordingly
     if (response.status === 200) {
-      setUploadImages(response.data.imageUrls);
+      let newimgarray = [...uploadImages];
+          newimgarray.push(response.data.imageUrls[0]);
+          console.log("imageURLS",response.data.imageUrls)
+      setUploadImages(newimgarray);
       setBlobUrls([]);
       setSelectedFiles([]); 
       setLoading(false);
@@ -98,18 +123,33 @@ const ImageUpload = ({openHandler , editdata ,iscreate ,isedit, Datahandler}) =>
     console.log("response", response);
   }
 
+
+  const handleProfileCroppedImgSet = (image)=>{
+    //  console.log("image",image);     
+    
+}
+
+  const handleprofilecancel = ()=>{
+    setCroppingModel1Open(false);
+   }
   
 
 
   // JSX for rendering the image upload form
   return (
     <Fragment>
+      {
+        croppingModel1Open ? 
+        <CropSection imageSetHandler={handleFilechangeChange} image={Photo} cancelhandler={handleprofilecancel} aspect={3/4}/>
+        :
+        null
+      }
     <div className='bg-black opacity-30 z-30 fixed w-full top-0 bottom-0 left-0 right-0'></div>
     <div className='bg-white   h-[90vh] rounded-[20px] top-10 z-30 fixed   bottom-10 left-10 right-10' style={{backgroundColor:"white"}}>
       <Container >
         {/* Title Input */}
         <div className='relative py-5 '>
-          <button className='absolute right-[20px] font-bold text-[30px]  text-gray-500' onClick={openHandler}>X</button>
+          <button className='absolute right-[20px] font-bold text-[30px]  text-gray-500' onClick={openHandler}><IoMdClose/></button>
         </div>
         <div>
         <TextField
@@ -126,7 +166,6 @@ const ImageUpload = ({openHandler , editdata ,iscreate ,isedit, Datahandler}) =>
           type="file"
           onChange={handleFileChange}
           accept="image/*"
-          multiple
           style={{ display: 'none' }}
           id="fileInput"
         />

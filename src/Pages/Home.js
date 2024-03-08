@@ -18,13 +18,11 @@ export default function Home() {
 
   
   return (
-    <>
-   
+    <>   
       <NewLanding />
       <div className='px-3'>
           <hr className='style14' />
-          <div className='py-12 career-card'>
-          
+          <div className='py-12 career-card'>          
           <Card color="transparent" shadow={false}>
           <div className="title-container">
             <div className="gold-line"></div>
@@ -33,11 +31,8 @@ export default function Home() {
             </div>
             <h5 className="mb-0 md:mb-8 text-sm sm:text-xl gilroyMedium">Enter your details to register.
             </h5>
-
              <Touch image={manlap} />
-
             </Card>
-
             </div>
             </div>
       <Footer />

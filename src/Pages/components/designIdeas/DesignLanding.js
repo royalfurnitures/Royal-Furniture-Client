@@ -20,6 +20,7 @@ import Touch from "../commercial/Touch";
 import Footer from "../Footer";
 import Bottom from "../Bottom";
 import modt from "../../../assets/image/bg/mod.webp"
+import { GetBlogByModuleAndCategoryAPIHandler } from "../../../API/APIS";
 
    
 export function Designideas() {
@@ -27,6 +28,10 @@ export function Designideas() {
   const [value, setValue] = useState(0);
   const [subvalue, setSubvalue] = useState(0);
   const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [subType, setSubType] = useState('');
+  const [edufurnDivision, setEdufurnDivision] = useState('Steel');
+  const [blogs, setBlogs] = useState('');
 
   let { pagetype , tabdata } = useParams();
 
@@ -40,33 +45,76 @@ useEffect(()=>{
       if(pagetype === "interio"){
            setDesignData(interior.Tabs)
            setTitle(interior.Title)
+           setCategory('Interio');
+           setSubType(interior.Tabs[Number(tabdata)]?.Name);
       }
       
       if(pagetype === "edufurn"){
           setDesignData(edufurn.Tabs)
           setTitle(edufurn.Title)
+          setCategory('EduFurn');
+          setSubType(edufurn.Tabs[Number(tabdata)]?.Name);
+          setEdufurnDivision(edufurn.Tabs[Number(tabdata)].SubCategory[subvalue]);
       }
 
       
       if(pagetype === "medifurn"){
           setDesignData(medifurn.Tabs)
           setTitle(medifurn.Title)
+          setCategory('MediFurn');
+          setSubType(medifurn.Tabs[Number(tabdata)]?.Name);
       }
 
 
       if(pagetype === "modular"){
           setDesignData(modular.Tabs)
           setTitle(modular.Title)
+          setCategory('Modular');
+          setSubType(modular.Tabs[Number(tabdata)]?.Name);
       }
 
 
       if(pagetype === "shopfit"){
           setDesignData(shopfit.Tabs)
           setTitle(shopfit.Title)
+          setCategory('Shopfit');
+          setSubType(shopfit.Tabs[Number(tabdata)]?.Name);
       }
 
-           setValue(Number(tabdata))       
+           setValue(Number(tabdata));
+             
   },[])
+
+  useEffect(()=>{
+   
+      if(subType){
+      setSubType(designData[value]?.Name);
+      
+      }
+    else{
+      setSubType(designData[value]?.Name);
+    }
+      // console.log("subtype",designData[Number(tabdata)]?.Name);
+  },[value ,designData])
+
+  
+
+  const  GetBlogByModuleAndCategory = async (module,subcategory)=>{
+    // console.log("Moduel Type",category ,subType);
+    const response = await GetBlogByModuleAndCategoryAPIHandler(module,subcategory)
+    // console.log("response",response);
+    setBlogs(response.data)
+  }
+  // console.log("subtype",subType,"Category",category);
+
+  useEffect(()=>{
+    if(category && subType)
+    GetBlogByModuleAndCategory( category,subType)
+  },[category,subType])
+
+
+
+  
       
       function TabPanel(props) {
         const { children, value, index, ...other } = props;
@@ -97,61 +145,19 @@ useEffect(()=>{
         value: PropTypes.number.isRequired,
       };
       
-      function a11yProps(index) {
-        return {
-          id: `vertical-tab-${index}`,
-          'aria-controls': `vertical-tabpanel-${index}`,
-        };
-      }
+     
       
 
 
     const handleChange = (event, newValue) => {
-      console.log("value",newValue)
-      console.log("event",event)
+      
     setValue(newValue);
     };
 
-    
-    
-    const data = [
-      {
-        label: "Kitchen",
-        value: "html",
-        desc: `It really matters and then like it really doesn't matter.
-        What matters is the people who are sparked by it. And the people
-        who are like offended by it, it doesn't matter.`,
-      },
-      {
-        label: "living Room",
-        value: "react",
-        desc: `Because it's about motivating the doers. Because I'm here
-        to follow my dreams and inspire other people to follow their dreams, too.`,
-      },
-   
-      {
-        label: "Tv unit",
-        value: "vue",
-        desc: `We're not always in the position that we want to be at.
-        We're constantly growing. We're constantly making mistakes. We're
-        constantly trying to express ourselves and actualize our dreams.`,
-      },
-   
-      {
-        label: "Wardrobe",
-        value: "angular",
-        desc: `Because it's about motivating the doers. Because I'm here
-        to follow my dreams and inspire other people to follow their dreams, too.`,
-      },
-   
-      {
-        label: "False ceiling",
-        value: "svelte",
-        desc: `We're not always in the position that we want to be at.
-        We're constantly growing. We're constantly making mistakes. We're
-        constantly trying to express ourselves and actualize our dreams.`,
-      },
-    ];
+  const Filterfunction = (query)=>{
+    const filteredItems = blogs.filter(item => item.EdufurnDivision === query);
+    return filteredItems ;
+  }
    
     return (
       <Fragment>
@@ -194,9 +200,9 @@ useEffect(()=>{
                       <TabPanel value={subvalue} index={0}>
                       <div className="grid grid-cols-6 gap-[10px]">
                       {
-                        [1,2].map((item,index)=>                       
+                        blogs?.length > 0 && Filterfunction("Steel")?.length >0 ? Filterfunction("Steel").map((item, index) =>                     
                         <div className="col-span-6 md:col-span-3  lg:col-span-2">
-                        <Link to="/designideas/lshapekitchen">
+                        <Link to={`/designideasblogs/blog/${item._id}`}>
                         <Card  className="w-full max-w-[26rem] shadow-lg">
                                 <CardHeader floated={false} color="blue-gray">
                                 <img
@@ -246,6 +252,10 @@ useEffect(()=>{
                             </Link>
                         </div>
                          )
+                         :
+                         <div className="col-span-6">
+                          <div className=" flex items-center justify-center text-[#ff3232e1]">No Data Found</div>
+                          </div> 
                         }
                        
                     </div>
@@ -253,9 +263,9 @@ useEffect(()=>{
                       <TabPanel value={subvalue} index={1}>
                       <div className="grid grid-cols-6 gap-[10px]">
                       {
-                        [1,2,3].map((item,index)=>                       
+                        blogs?.length > 0 && Filterfunction("Wood")?.length >0 ? Filterfunction("Wood").map((item, index) =>                      
                         <div className="col-span-6 md:col-span-3  lg:col-span-2">
-                        <Link to="/designideas/lshapekitchen">
+                        <Link to={`/designideasblogs/blog/${item._id}`}>
                         <Card  className="w-full max-w-[26rem] shadow-lg">
                                 <CardHeader floated={false} color="blue-gray">
                                 <img
@@ -305,6 +315,10 @@ useEffect(()=>{
                             </Link>
                         </div>
                          )
+                         :
+                         <div className="col-span-6">
+                          <div className=" flex items-center justify-center text-[#ff3232e1]">No Data Found</div>
+                          </div> 
                         }
                        
                     </div>
@@ -312,13 +326,13 @@ useEffect(()=>{
                       <TabPanel value={subvalue} index={2}>
                       <div className="grid grid-cols-6 gap-[10px]">
                       {
-                        [1,2,3,4].map((item,index)=>                       
+                        blogs?.length > 0 && Filterfunction("Steel Plus Wood")?.length >0 ? Filterfunction("Steel Plus Wood").map((item, index) =>                     
                         <div className="col-span-6 md:col-span-3  lg:col-span-2">
-                        <Link to="/designideas/lshapekitchen">
+                        <Link to={`/designideasblogs/blog/${item._id}`}>
                         <Card  className="w-full max-w-[26rem] shadow-lg">
                                 <CardHeader floated={false} color="blue-gray">
                                 <img
-                                    src={pic}
+                                    src={item.mainContent1.imageurl[0].URL}
                                     alt="ui/ux review check"
                                 />
                                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
@@ -363,7 +377,12 @@ useEffect(()=>{
                             </Card>
                             </Link>
                         </div>
+                        
                          )
+                         :
+                         <div className="col-span-6">
+                          <div className=" flex items-center justify-center text-[#ff3232e1]">No Data Found</div>
+                          </div> 
                         }
                        
                     </div>
@@ -373,13 +392,13 @@ useEffect(()=>{
                       :
                     <div className="grid grid-cols-6 gap-[10px]">
                       {
-                        [1,2,3,4].map((item,index)=>                       
+                        blogs?.length > 0 ? blogs.map((item,index)=>                       
                         <div className="col-span-6 md:col-span-3  lg:col-span-2">
-                        <Link to="/designideas/lshapekitchen">
+                        <Link to={`/designideasblogs/blog/${item._id}`}>
                         <Card  className="w-full max-w-[26rem] shadow-lg">
                                 <CardHeader floated={false} color="blue-gray">
                                 <img
-                                    src={pic}
+                                    src={item.mainContent1.imageurl[0].URL}
                                     alt="ui/ux review check"
                                 />
                                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
@@ -402,7 +421,7 @@ useEffect(()=>{
                                 <CardBody>
                                 <div className="mb-3 flex items-center justify-between">
                                     <Typography  color="blue-gray" className="text-sm sm:text-xl text-justify gilroyBold">
-                                    Modern L-Shaped Kitchen Design With Pink Backsplash Tiles
+                                    {item.mainContent1.title}
                                     </Typography>
                                     <Typography
                                     color="blue-gray"
@@ -425,6 +444,10 @@ useEffect(()=>{
                             </Link>
                         </div>
                          )
+                         :
+                         <div className="col-span-6">
+                          <div className=" flex items-center justify-center text-[#ff3232e1]">No Data Found</div>
+                          </div> 
                         }
                        
                     </div>

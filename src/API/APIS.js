@@ -470,6 +470,131 @@ export const GetAllModulesPhotoHandler = async (type)=>{
     }   
 }
 
+export const  BlogPublishAPIHandler = async (data)=>{
+    // console.log("data",data);
+
+    // Define the options for the fetch request, including the method, headers, and the data to be sent
+   let options = {
+           method:"POST",
+           headers:{"Content-Type":"application/json"},
+           body:JSON.stringify(data)
+          };
+try{
+   
+     // Make a POST request to the specified API endpoint, and parse the response as JSON
+    const response = await fetch(`${BASE_URL}/api/blog/create-blog`,options).then(res=>res.json());
+    // Return the parsed response
+    return response ;      
+}
+catch(error){
+    // Log an error message if the request fails
+    console.error('Error publishing data:', error.message);
+    // Return error in case of an error
+    return error ;
+}
+
+} 
+
+export const  BlogUpdateAPIHandler = async (data)=>{
+    // console.log("data",data);
+
+    // Define the options for the fetch request, including the method, headers, and the data to be sent
+   let options = {
+           method:"POST",
+           headers:{"Content-Type":"application/json"},
+           body:JSON.stringify(data)
+          };
+try{
+   
+     // Make a POST request to the specified API endpoint, and parse the response as JSON
+    const response = await fetch(`${BASE_URL}/api/blog/update-blog`,options).then(res=>res.json());
+    // Return the parsed response
+    return response ;      
+}
+catch(error){
+    // Log an error message if the request fails
+    console.error('Error update data:', error.message);
+    // Return error in case of an error
+    return error ;
+}
+
+} 
+
+export const  BlogDeleteAPIHandler = async (data)=>{
+    // console.log("data",data);
+
+    // Define the options for the fetch request, including the method, headers, and the data to be sent
+   let options = {
+           method:"POST",
+           headers:{"Content-Type":"application/json"},
+           body:JSON.stringify(data)
+          };
+try{
+   
+     // Make a POST request to the specified API endpoint, and parse the response as JSON
+    const response = await fetch(`${BASE_URL}/api/blog/delete-blog`,options).then(res=>res.json());
+    // Return the parsed response
+    return response ;      
+}
+catch(error){
+    // Log an error message if the request fails
+    console.error('Error delete data:', error.message);
+    // Return error in case of an error
+    return error ;
+}
+
+}
+
+export const  GetBlogByModuleAPIHandler = async (data)=>{
+    // console.log("data",data);
+try{
+     
+    const response = await fetch(`${BASE_URL}/api/blog/get-blog-by-modules/${data}`,{method:"GET"}).then(res=>res.json());
+    // Return the parsed response
+    return response ;      
+}
+catch(error){
+    // Log an error message if the request fails
+    console.error('Error Get data:', error.message);
+    // Return error in case of an error
+    return error ;
+}
+
+}
+
+export const  GetBlogByModuleAndCategoryAPIHandler = async (module,type)=>{
+    console.log("data",module,type);
+try{
+     
+    const response = await fetch(`${BASE_URL}/api/blog/get-blog-by-modules-and-category/${module}/${type}`,{method:"GET"}).then(res=>res.json());
+    // Return the parsed response
+    return response ;      
+}
+catch(error){
+    // Log an error message if the request fails
+    console.error('Error Get data:', error.message);
+    // Return error in case of an error
+    return error ;
+}
+
+}
+
+export const  GetBlogByIDAPIHandler = async (id)=>{
+    // console.log("data",data);
+try{
+     
+    const response = await fetch(`${BASE_URL}/api/blog/get-blog-by-id/${id}`,{method:"GET"}).then(res=>res.json());
+    // Return the parsed response
+    return response ;      
+}
+catch(error){
+    // Log an error message if the request fails
+    console.error('Error Get data:', error.message);
+    // Return error in case of an error
+    return error ;
+}
+
+}
 
 
 

@@ -35,9 +35,8 @@ const AdminContact = React.lazy(() => import('./Pages/ADMIN PART/Contact'));
 const Partner = React.lazy(() => import('./Pages/components/Partner/Partner'));
 const PrivacyPolicy = React.lazy(() => import('./Pages/screens/PrivacyPolicy'));
 const Login = React.lazy(() => import('./Pages/ADMIN PART/Login'));
-
-
-
+const DesignIdeas = React.lazy(() => import('./Pages/ADMIN PART/DesignIdeas'));
+const SingleBlog = React.lazy(() => import('./Pages/components/designIdeas/SingleBlog'));
 
 
 let responsePayload ;
@@ -74,6 +73,7 @@ export default function Router() {
         <Route path='/showroom'  element={<Showroom />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/associatewith' element={<Partner />} />        
+        <Route path='/designideasblogs/blog/:blogmetadata' element={<SingleBlog />} />        
         <Route path="/login" element={<Login/>}/>
         <Route path="/error404" element={<Error404/>} />
         <Route path='*' element={<Navigate to ='/error404'/>} />
@@ -88,6 +88,7 @@ export default function Router() {
 
         <Route path='/adminshopfit' element={<AdminShopfit/>} />
         <Route path='/admincontact' element={<AdminContact/>} />
+        <Route path='/admindesignideas' element={<DesignIdeas/>} />
         {/* <Route path='/admin' element={<Admin/>} />  */}
         </>
         :

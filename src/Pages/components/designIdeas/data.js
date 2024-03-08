@@ -10,7 +10,7 @@ export const interior ={
         Blogs:[]
     },
     { 
-        Name:" Bed Room" ,
+        Name:"Bed Room" ,
         Blogs:[]
     },
     { 
@@ -28,47 +28,47 @@ export const edufurn ={
     Tabs: [
     { 
         Name:"Class Room" ,
-        SubCategory:["Steel","Wood","Stell Plus Wood"],
+        SubCategory:["Steel","Wood","Steel Plus Wood"],
         Blogs:[]
     },
     { 
         Name:"Computer Lab" ,        
-        SubCategory:["Steel","Wood","Stell Plus Wood"],
+        SubCategory:["Steel","Wood","Steel Plus Wood"],
         Blogs:[]
     },
     { 
         Name:"Kindergarden" ,        
-        SubCategory:["Steel","Wood","Stell Plus Wood"],
+        SubCategory:["Steel","Wood","Steel Plus Wood"],
         Blogs:[]
     },
     { 
         Name:"Labs" ,        
-        SubCategory:["Steel","Wood","Stell Plus Wood"],
+        SubCategory:["Steel","Wood","Steel Plus Wood"],
         Blogs:[]
     },
     { 
         Name:"Library" ,        
-        SubCategory:["Steel","Wood","Stell Plus Wood"],
+        SubCategory:["Steel","Wood","Steel Plus Wood"],
         Blogs:[]
     },
     { 
         Name:"Hostel" ,        
-        SubCategory:["Steel","Wood","Stell Plus Wood"],
+        SubCategory:["Steel","Wood","Steel Plus Wood"],
         Blogs:[]
     },
     { 
         Name:"Chairs" ,        
-        SubCategory:["Steel","Wood","Stell Plus Wood"],
+        SubCategory:["Steel","Wood","Steel Plus Wood"],
         Blogs:[]
     },
     { 
         Name:"Auditorium" ,        
-        SubCategory:["Steel","Wood","Stell Plus Wood"],
+        SubCategory:["Steel","Wood","Steel Plus Wood"],
         Blogs:[]
     },
     { 
         Name:"Management Space" ,        
-        SubCategory:["Steel","Wood","Stell Plus Wood"],
+        SubCategory:["Steel","Wood","Steel Plus Wood"],
         Blogs:[]
     }
 ]

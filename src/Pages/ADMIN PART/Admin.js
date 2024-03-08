@@ -51,6 +51,7 @@ export const Admin = () => {
                <Link to="/adminmedifurn"><div className={`${currenttab === "adminmedifurn" ? "bg-orange-400 rounded-lg p-2 text-white cursor-default text-bold":"p-2 cursor-pointer text-bold"}`} onClick={()=>{setTabIndex(5)}}>MediFurn</div></Link>
                <Link to="/adminshopfit"><div className={`${currenttab === "adminshopfit" ? "bg-orange-400 rounded-lg p-2 text-white cursor-default text-bold":"p-2 cursor-pointer text-bold"}`} onClick={()=>{setTabIndex(6)}}>ShopFit</div> </Link> 
                <Link to="/admincontact"><div className={`${currenttab === "admincontact" ? "bg-orange-400 rounded-lg p-2 text-white cursor-default text-bold":"p-2 cursor-pointer text-bold"}`} onClick={()=>{setTabIndex(7)}}>Contact</div></Link>
+               <Link to="/admindesignideas"><div className={`${currenttab === "admindesignideas" ? "bg-orange-400 rounded-lg p-2 text-white cursor-default text-bold":"p-2 cursor-pointer text-bold"}`} onClick={()=>{setTabIndex(8)}}>Design Ideas</div></Link>
                <div className={`${currenttab === "logout" ? "bg-orange-400 rounded-lg p-2 text-white cursor-default text-bold":"p-2 cursor-pointer text-bold"}`} onClick={()=>{HandleLogout()}}>Logout</div>                 
             </div>
          </div>
