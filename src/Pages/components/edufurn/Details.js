@@ -51,6 +51,7 @@ import StepFive from '../StepFive';
 import Prev from '../Prev';
 import { ClientPrev } from '../ClientPrev';
 import { GetAllModulesPhotoHandler } from '../../../API/APIS';
+import Bottom from '../Bottom';
 
 
 const cardsHow = [
@@ -256,7 +257,7 @@ export default function Details() {
     <Prev moduleName="EduFurn" />
     <div className='px-3'>
     <Touch image={edu} />
-       
+    <Bottom />
     </div>
     <Footer />
     </div>

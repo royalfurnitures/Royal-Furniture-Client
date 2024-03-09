@@ -72,6 +72,7 @@ import {
 import SlideImages from '../SlideImages';
 import StepFive from '../StepFive';
 import { GetAllModulesPhotoHandler } from '../../../API/APIS';
+import Bottom from '../Bottom';
 
 
 const stepCards = [
@@ -284,9 +285,10 @@ export default function Details() {
     <ClientPrev moduleName="Shopfit" title="The voice of our clients echoes in their 
 testimonials." />
     <Prev moduleName="Shopfit" />    
-    <div className='px-3'>
+    <div className='px-3 mt-20'>
     <Touch image={modt} />
     </div>
+    <Bottom/>
     <Footer />
     </div>
   )

@@ -229,6 +229,8 @@ export default function Prev({moduleName}) {
   
   return (
         <div>
+          {
+          photos.length > 0 ? 
             <Container>
             <div className='p-title flex flex-col sm:flex-row pb-5 md:pt-10 md:pb-10'>
             <div className='p-text  text-xl md:text-2xl lg:text-4xl gilroyBold text-left py-4 text-r-tvoi '>
@@ -238,7 +240,8 @@ export default function Prev({moduleName}) {
               Get Free Consultation
             </Button>
             </div>
-            <div className="carousel-container pb-5 md:pb-10 mb-5 md:mb-10">
+                   
+        <div className="carousel-container h-[500px] pb-5 md:pb-10 mb-5 md:mb-10">
             <Slider ref={sliderRef} arrows={false} {...settings}>
             {/* Replace the following with your card components */}
             {
@@ -262,6 +265,8 @@ export default function Prev({moduleName}) {
             
             {/* Add more cards as needed */}
             </Slider>
+            {
+              photos.length > 0?
             <div className="carousel-navigation">
             <button className="carousel-nav-button" onClick={handlePrevious}>
                 <ExpandCircleDownIcon fontSize='large' style={{ transform: "rotate(90deg)"}} />
@@ -269,9 +274,15 @@ export default function Prev({moduleName}) {
             <button className="carousel-nav-button" onClick={handleNext}>
                 <ExpandCircleDownIcon fontSize='large' style={{ transform: "rotate(270deg)"}} />
             </button>
-            </div>
+            </div>:
+            null
+            }
         </div>
+        
         </Container>
+        :
+        null
+        }
         <React.Fragment>
           <Dialog
             size="xl"

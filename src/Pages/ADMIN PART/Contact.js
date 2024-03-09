@@ -79,7 +79,7 @@ const Contact = () => {
                  
                 </CardContent>
                 <CardActions>
-                  <Button size="small" onClick={()=>{DeleteContactHandler(item._id)}}>Delete</Button>
+                  <Button size="small" color='warning' onClick={()=>{DeleteContactHandler(item._id)}}>Delete</Button>
                 </CardActions>
                 </Card>
              </div>)}

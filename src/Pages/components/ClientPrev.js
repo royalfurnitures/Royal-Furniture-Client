@@ -1,4 +1,4 @@
-import React ,{ useState , useEffect } from 'react';
+import React ,{ useState , useEffect, Fragment } from 'react';
 import Slider from 'react-slick';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import Card from '@mui/material/Card';
@@ -51,7 +51,6 @@ let data = [
 ]
 export const ClientPrev = (props) => {
   const [allVideos,setAllVideos] = useState([]);
-
   
 
   useEffect(()=>{
@@ -70,13 +69,13 @@ export const ClientPrev = (props) => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 2
         }
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 1
         }
       },
     ],
@@ -98,17 +97,21 @@ export const ClientPrev = (props) => {
   console.log("videos",allVideos);
 
   return (
-    <div className='bg-r-bggray'>
+    <Fragment>
+    {
+      allVideos.length > 0 ?   
+    <div className='bg-r-bggray pb-10'>
     <Container>
       <div className='cp-title gilroyBold mt-[20px] mb-[30px] md:mt-[45px] md:mb-[60px] text-xl md:text-2xl lg:text-4xl text-r-tvoi pt-10 sm:pt-24'>
       {props.title}
       </div>
-      <div className="carousel-container pb-5 md:pb-24 mb-0 md:mb-12">
-        <Slider ref={sliderRef} arrows={false} {...settings}>
+      <div className="carousel-container h-[335px]  pb-10 md:pb-24 mb-0 md:mb-12">
+        <Slider ref={sliderRef} arrows={false}  {...settings}>
           {/* Replace the following with your card components */}
           {
             allVideos.length > 0 && allVideos.map(item=><div key={item._id}>
-              <Card style={{boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px"}} className='m-auto' sx={{ maxWidth: 345 }}>
+               
+               <Card style={{boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px"}} className='m-auto' sx={{ maxWidth: 345 }}>
                   <CardMedia
                       sx={{ height: 240 }}
                       image={img}
@@ -133,12 +136,13 @@ export const ClientPrev = (props) => {
                       </Typography>
                   </CardContent>
                   
-              </Card>
+              </Card>     
               </div>)
           }
          
           {/* Add more cards as needed */}
         </Slider>
+             
         <div className="carousel-navigation">
           <button className="carousel-nav-button" onClick={handlePrevious}>
             <ExpandCircleDownIcon fontSize='large' style={{ transform: "rotate(90deg)"}} />
@@ -147,9 +151,13 @@ export const ClientPrev = (props) => {
             <ExpandCircleDownIcon fontSize='large' style={{ transform: "rotate(270deg)"}} />
           </button>
         </div>
+        
       </div>
     </Container>
     </div>
+    :
+    null}
+    </Fragment>
   );
 };
 

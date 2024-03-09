@@ -60,6 +60,7 @@ import StepFive from '../StepFive';
 import { ClientPrev } from '../ClientPrev';
 import Prev from '../Prev';
 import { GetAllModulesPhotoHandler } from '../../../API/APIS';
+import Bottom from '../Bottom';
 
 const cardsHow = [
     {
@@ -269,6 +270,7 @@ export default function Details() {
     <div className='px-3'>
     <Touch image={medit}/>
     </div>
+    <Bottom />
     <Footer />
     </div>
   )

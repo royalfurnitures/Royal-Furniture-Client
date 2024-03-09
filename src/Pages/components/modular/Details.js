@@ -62,6 +62,7 @@ import {
 import SlideImages from '../SlideImages';
 import StepFive from '../StepFive';
 import { GetAllModulesPhotoHandler } from '../../../API/APIS';
+import Bottom from '../Bottom';
 
 
 const stepCards = [
@@ -272,7 +273,9 @@ testimonials." />
     <div className='px-3'>
       <Touch image={modt} />
     </div>
+    <Bottom />
     <Footer />
+
     </div>
   )
 }
