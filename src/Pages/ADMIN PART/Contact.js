@@ -8,10 +8,13 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Popup from './Popup';
 
 const Contact = () => {
     const [contactlist,setContactlist] = useState([]);
     const [loading,setLoading] = useState(false);
+    const [deletedata,setDeleteData] = useState('');
+   const [isDeletePopup,setIsDeletePopup] = useState(false);
 
     useEffect(()=>{
          GetAllContactHandler();
@@ -29,17 +32,29 @@ const Contact = () => {
         let result= await DeleteContact(id);
         GetAllContactHandler();
     }
+    const handleDeletemodel = (action)=>{
+      if(action === true){
+        DeleteContactHandler(deletedata);
+      }
+      setIsDeletePopup(false);
+    }
 
   return (
     <div className='fixed top-0 bottom-0 left-0 right-0 bg-white z-50'>
          <Admin/>
          {
+        isDeletePopup ?
+        <Popup handleModel={handleDeletemodel} isDelete={true} />
+        :
+        null
+        }
+         {
         loading ?
         <FrontPage/>:
         null
        }
-         <div className='lg:ml-[300px] mt-[100px] p-8'>
-         <div className='grid grid-cols-12 gap-[10px] overflow-y-scroll pb-10 h-[80vh]'>
+         <div className='lg:ml-[300px] mt-[100px] py-8 px-0'>
+         <div className='grid grid-cols-12 gap-[10px] overflow-y-scroll pb-20 px-4 h-[80vh]'>
              {contactlist.length > 0 && contactlist?.map(item=>
               <div className='col-span-12 md:col-span-6 lg:col-span-4'>
                  {/* <div className='border p-4 rounded-lg'>
@@ -68,9 +83,13 @@ const Contact = () => {
                   <Typography variant="body2">
                   Mobile No : {item.MobileNo}      
                   </Typography>
+                  {item?.Pincode ?
                   <Typography variant="body2">
-                  Pincode : {item?.Pincode ? item.Pincode : "-" }      
+                  Pincode : {item.Pincode}      
                   </Typography>
+                  :
+                  null
+                   }
                   <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                   Created Time : {new Date(item.createdAt).toLocaleString()}
                   </Typography>
@@ -79,7 +98,7 @@ const Contact = () => {
                  
                 </CardContent>
                 <CardActions>
-                  <Button size="small" color='warning' onClick={()=>{DeleteContactHandler(item._id)}}>Delete</Button>
+                  <Button size="small" color='warning' onClick={()=>{setIsDeletePopup(true);setDeleteData(item._id)}}>Delete</Button>
                 </CardActions>
                 </Card>
              </div>)}

@@ -16,6 +16,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import { IoMdAdd } from 'react-icons/io';
+import Popup from './Popup';
 
 
 
@@ -28,6 +30,8 @@ const DisplayDesignIdeas = () => {
    const [Tab,setTab]=useState('Interio');
    const [blogs,setBlogs] = useState([]);
    const [categorylists , setCategoryLists] = useState([]);
+   const [deletedata,setDeleteData] = useState('');
+   const [isDeletePopup,setIsDeletePopup] = useState(false);
 
    let type = "";
      if(Tab === "EduFurn")
@@ -81,10 +85,17 @@ console.log("categorylists",categorylists);
     setIsEdit(!isEdit);
    }
 
+   const handleDeletemodel = (action)=>{
+    if(action === true){
+     DeleteHandler(deletedata);
+    }
+    setIsDeletePopup(false);
+  }
+
    let data = [{Images:["https://firebasestorage.googleapis.com/v0/b/royalfurnitures-ba1c7.appspot.com/o/ff5751b2-954f-4047-980a-1e51e64d6910_blob?alt=media&token=1dd9c17c-f245-4103-917"],Title:"Write short paragraphs and cover one topic per paragraph. Long paragraphs discourage users from even trying to understand your material. Short paragraphs are easier to read and understand."},{Images:["https://firebasestorage.googleapis.com/v0/b/royalfurnitures-ba1c7.appspot.com/o/ff5751b2-954f-4047-980a-1e51e64d6910_blob?alt=media&token=1dd9c17c-f245-4103-917"],Title:"Write short paragraphs and cover one topic per paragraph. Long paragraphs discourage users from even trying to understand your material. Short paragraphs are easier to read and understand."},{Images:["https://firebasestorage.googleapis.com/v0/b/royalfurnitures-ba1c7.appspot.com/o/ff5751b2-954f-4047-980a-1e51e64d6910_blob?alt=media&token=1dd9c17c-f245-4103-917"],Title:"Write short paragraphs and cover one topic per paragraph. Long paragraphs discourage users from even trying to understand your material. Short paragraphs are easier to read and understand."},{Images:["https://firebasestorage.googleapis.com/v0/b/royalfurnitures-ba1c7.appspot.com/o/ff5751b2-954f-4047-980a-1e51e64d6910_blob?alt=media&token=1dd9c17c-f245-4103-917"],Title:"Write short paragraphs and cover one topic per paragraph. Long paragraphs discourage users from even trying to understand your material. Short paragraphs are easier to read and understand."}]
 
    const Displaydata = (data)=>{
-      return <div className='grid grid-cols-12 overflow-y-scroll h-[80vh] gap-[10px]'>
+      return <div className='grid grid-cols-12 overflow-y-scroll h-[70vh] px-4 pb-20 gap-[10px]'>
       {data?.length > 0 && data?.map(item=>
        <div className='col-span-12 md:col-span-6 lg:col-span-3'>
           {/* <div className='border p-4 rounded-lg'>
@@ -105,7 +116,7 @@ console.log("categorylists",categorylists);
         <CardMedia
           component="img"
           height="140"
-          image={item.mainContent1?.imageurl[0].URL}
+          image={item.mainContent1?.imageurl[0]?.URL}
           alt="green iguana"
         />
         <CardContent>
@@ -130,7 +141,7 @@ console.log("categorylists",categorylists);
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="warning" onClick={()=>{DeleteHandler(item._id)}}>
+        <Button size="small" color="warning" onClick={()=>{setIsDeletePopup(true);setDeleteData(item._id)}}>
           Delete
         </Button>
         <Button size="small" color="primary" onClick={()=>{setEditData(item);Edithandler()}}>
@@ -150,6 +161,12 @@ console.log("categorylists",categorylists);
     <div className='lg:flex'>
         <Admin/>
         {
+        isDeletePopup ?
+        <Popup handleModel={handleDeletemodel} isDelete={true} />
+        :
+        null
+      }
+        {
           isCreate ? 
           <CreateEditBlog tab={type} categorylists={categorylists}  Datahandler={()=>{GetBlogsByModule(Tab)}} iscreate={true} openHandler={handler} />
           :
@@ -166,9 +183,9 @@ console.log("categorylists",categorylists);
         <FrontPage/>:
         null
       }
-        <div className='lg:ml-[300px] p-8 w-[100%]'>
+        <div className='lg:ml-[300px] py-8 px-2 w-[100%]'>
         <div className='relative h-[20px] mb-20'>
-             <button className='fixed right-[20px] text-5xl text-white bg-orange-500 px-2  font-bold rounded-lg ' onClick={()=>{setIsCreate(true)}} > + </button>
+        <button className='fixed bottom-14  right-10  text-2xl  text-[white]  font-bold rounded-lg flex items-center gap-1 ' onClick={()=>{setIsCreate(true)}} > <Button variant="contained"><IoMdAdd/>&nbsp; create </Button> </button>
           </div>
           <div className='w-[100%] flex items-center justify-center gap-3'>
               <div onClick={()=>HandleTabs('Interio')} className={`${Tab === "Interio" ? "bg-[#df950b] rounded-[10px] text-[white]" : ""} uppercase p-2 cursor-pointer`}>Interio</div>

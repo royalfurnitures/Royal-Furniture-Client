@@ -8,7 +8,9 @@ import { DeleteGalleryAPIHandler, handleUpload, ModulesPublishAPIHandler, Module
 import CircularProgress from '@mui/material/CircularProgress';
 import { Card, Container } from '@mui/material';
 import CropSection from './CropSection';
-import { IoMdClose } from 'react-icons/io';
+import { IoMdClose, IoMdCloudUpload } from 'react-icons/io';
+import Popup from './Popup';
+import { FaRegImage } from "react-icons/fa6";
 
 // Functional component for image upload functionality
 const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHandler , editdata ,iscreate ,isedit, Datahandler ,type}) => {
@@ -21,6 +23,8 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
   const [loading, setLoading] = useState(false);
   const [Photo,setPhoto] = useState('');
   const [croppingModel1Open,setCroppingModel1Open] = useState(false);
+  const [isCreatePopup,setIsCreatePopup] = useState(false);
+  const [isEditPopup,setIsEditPopup] = useState(false);
 
   // Event handler for file input change
   const handleFileChange = async (event) => {
@@ -124,11 +128,36 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
   const handleprofilecancel = ()=>{
     setCroppingModel1Open(false);
    }
+   const handleCreatemodel = (action)=>{
+    if(action === true){
+      PublishHandler();
+    }
+    setIsCreatePopup(false);
+}
+
+const handleEditmodel = (action)=>{
+  if(action === true){
+    UpdateHandler();
+   }
+  setIsEditPopup(false);
+}
 
 
   // JSX for rendering the image upload form
   return (
     <Fragment>
+      {
+        isCreatePopup ?
+        <Popup handleModel={handleCreatemodel} isCreate={true} />
+        :
+        null
+      }
+      {
+        isEditPopup ?
+        <Popup handleModel={handleEditmodel} isEdit={true} />
+        :
+       null
+      }
        {
         croppingModel1Open ? 
         <CropSection imageSetHandler={handleFilechangeChange} image={Photo} cancelhandler={handleprofilecancel} aspect={1.23}/>
@@ -137,15 +166,21 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
       }
     <div className='bg-black opacity-30 z-30 fixed w-full top-0 bottom-0 left-0 right-0'></div>
 
-    <div className='bg-white h-[90vh] rounded-[20px] top-10 z-30 fixed   bottom-10 left-10 right-10' style={{backgroundColor:"white"}}>
+    <div className='bg-white h-[90vh] overflow-y-scroll rounded-[20px] top-10 z-30 fixed   bottom-10 left-10 right-10' style={{backgroundColor:"white"}}>
       <Container >
         {/* Title Input */}
-        <div className='relative py-10 '>
-          <button className='absolute right-[20px] font-bold text-[30px]  text-gray-500' onClick={openHandler}><IoMdClose/></button>
+        <div className='relative py-5 '>
+        <button className='absolute right-[20px] font-bold text-[30px]  text-gray-500' onClick={openHandler}><IoMdClose/></button>
+
+          <div className='flex items-center justify-center text-[20px] font-bold'>
+          {isedit ? "Update" : "Upload"} Photo 
+          </div>
         </div>
         <div>
+       <div className='text-[18px] font-bold mt-2 mb-2  ml-1'>Title <sup className='text-[#ff1b1b]'>*</sup></div>
+
         <TextField
-          label="Title"
+          label="Photo Title"
           variant="outlined"
           value={title}
           onChange={handleTextChange}
@@ -153,6 +188,7 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
           margin="normal"
           inputProps={{ maxLength: 40 }}
         />
+       <div className='text-[18px] font-bold mt-2 mb-2  ml-1'>Cover Image <sup className='text-[#ff1b1b]'>*</sup></div>
 
         {/* File Upload Input */}
         <input
@@ -165,16 +201,18 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
         />
         <label htmlFor="fileInput">
           <Button component="span" variant="contained" color="primary">
-            Upload Image
+            <span className='flex items-center justify-center gap-3'><IoMdCloudUpload />  Upload Image</span>
+          
           </Button>
         </label>
 
         {/* Display Selected Images with Loading Spinner */}
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
+        
           {
-            uploadImages.length > 0 ?
+            uploadImages?.length > 0 ?
             <>
-            {uploadImages.length > 0 && uploadImages.map((imageUrl, index) => (
+            {uploadImages?.length > 0 && uploadImages.map((imageUrl, index) => (
               <div key={index} style={{ width: '150px', height: 'auto', marginRight: '10px', position: "relative" }} onClick={()=>{RemoveImagefromupload(imageUrl)}}>               
                   <div style={{ position: "relative" }}>
                   { loading ? 
@@ -182,7 +220,7 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
                      :
                      null
                     }
-                     <div style={{ position: 'absolute', top: "10%", right: "10%" ,backgroundColor:"white",padding:"0px 5px 0px 5px ", color:"red", fontWeight:"bolder",borderRadius:"50%",cursor:"pointer"}}>X</div>
+                     {/* <div style={{ position: 'absolute', top: "10%", right: "10%" ,backgroundColor:"white",padding:"0px 5px 0px 5px ", color:"red", fontWeight:"bolder",borderRadius:"50%",cursor:"pointer"}}>X</div> */}
                     <img src={imageUrl.URL} alt={`uploaded-${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                  </div>
                 
@@ -192,26 +230,31 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
             :
             <>
           
-          {bloburls.length > 0 && bloburls.map((imageUrl, index) => (
-            <div key={index} style={{ width: '150px', height: 'auto', marginRight: '10px', position: "relative" }}>
+          
+            <div style={{ width: '150px', height: '150px', marginRight: '10px', position: "relative" }} className='border'>
               {loading ?
-                <div style={{ position: "relative" }}>
-                  <div style={{ position: 'absolute', top: "40%", left: "40%" }}><CircularProgress /></div>
-                  <img src={imageUrl} alt={`uploaded-${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: "relative" ,width: '150px', height: '150px'}}>
+                  <div style={{ position: 'absolute', top: "40%", left: "40%" }} className='m-auto'><CircularProgress /></div>
+                  
                 </div>
                 :   
-               null
+                <div className=' flex items-center justify-center h-[150px]'>
+                <FaRegImage className='text-[30px]' />
+                </div>
               }
+                  
             </div>
-          ))}
+          
           </>
          }
+        
+
         </div>
 
         {/* Submit Button */}
         {
           iscreate ?
-        <Button type="submit" variant="contained" color="success" className='my-3' disabled={!uploadImages.length > 0 || !title || loading} onClick={() => { PublishHandler() }}>
+        <Button type="submit" variant="contained" color="success" className='my-3' disabled={!uploadImages.length > 0 || !title || loading} onClick={() => { setIsCreatePopup(true) }}>
           Publish
         </Button>
         :
@@ -219,7 +262,7 @@ const CreateEditPhoto = ({ isEdu , isInterio , isMedi , isModu , isShop ,openHan
         }
          {
           isedit ?
-        <Button type="submit" variant="contained" color="success" className='my-3' disabled={!uploadImages.length > 0 || !title || loading} onClick={() => { UpdateHandler() }}>
+        <Button type="submit" variant="contained" color="success" className='my-3' disabled={!uploadImages.length > 0 || !title || loading} onClick={() => { setIsEditPopup(true) }}>
           Save
         </Button>
         :

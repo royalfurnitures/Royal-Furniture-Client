@@ -11,6 +11,8 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Grid from '@mui/material/Grid';
 import { GetVideoURL, createVideo, updateVideo } from "../../API/APIS";
 import { IoClose } from "react-icons/io5";
+import Popup from './Popup';
+import { IoMdClose } from 'react-icons/io';
 
 // Functional component for Video Creator
 export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit , openHandler }) {
@@ -22,7 +24,8 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
   const [Videos, setVideos] = useState([]);
   const [error, setError] = useState('');
   const [category, setCategory] = useState(editdata ? editdata.Category : ''); 
-
+  const [isCreatePopup,setIsCreatePopup] = useState(false);
+  const [isEditPopup,setIsEditPopup] = useState(false);
   // Function to handle fetching video based on the YouTube URL
   const handleGetVideo = async () => {
     let data = await GetVideoURL(videoUrl);
@@ -78,17 +81,47 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
       setError('Fill the required Field!!!');
     }
   };
+  const handleCreatemodel = (action)=>{
+    if(action === true){
+      handleAddVideo();
+    }
+    setIsCreatePopup(false);
+}
+
+const handleEditmodel = (action)=>{
+  if(action === true){
+    handleupdateVideo();
+   }
+  setIsEditPopup(false);
+}
 
   // JSX for rendering the Video Creator component
   return (
     <Fragment>
+       {
+        isCreatePopup ?
+        <Popup handleModel={handleCreatemodel} isCreate={true} />
+        :
+        null
+      }
+      {
+        isEditPopup ?
+        <Popup handleModel={handleEditmodel} isEdit={true} />
+        :
+       null
+      }
     <div className='bg-black opacity-30 z-30 fixed w-full top-0 bottom-0 left-0 right-0'></div>
-       <div className='h-[90vh] rounded-[20px] top-10 z-30 fixed   bottom-10 left-10 right-10' style={{backgroundColor:"white"}}>
+       <div className='h-[90vh] overflow-y-scroll rounded-[20px] top-10 z-30 fixed   bottom-10 left-10 right-10' style={{backgroundColor:"white"}}>
+
          
-          <Card style={{padding:"20px"}}>
-          <div className='flex items-center justify-end mr-[40px]'>
-          <IoClose className='text-5xl text-gray-500 cursor-pointer' onClick={openHandler} />
+          <Card style={{padding:"0px"}}>
+          <div className='relative pt-5 '>
+        <button className='absolute right-[20px] font-bold text-[30px]  text-gray-500' onClick={openHandler}><IoMdClose/></button>
+
+          <div className='flex items-center justify-center text-[20px] font-bold'>
+          {isedit ? "Update" : "Upload"} Video 
           </div>
+        </div>
         <CardContent>
           <Grid item xs={12} alignSelf='center'>
             {/* Display error message */}
@@ -99,18 +132,21 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
           <Grid container spacing={2}>
             <Grid item xs={12}>
               {/* Title input */}
+          <div className='text-[18px] font-bold mb-2 ml-1'>Video Title<sup className='text-[#ff1b1b]'>*</sup></div>
+
               <TextField
-                label="Description *"
+                label="Title *"
                 variant="outlined"
                 fullWidth
                 value={title}
                 onChange={(e) => settitle(e.target.value)}
-                style={{ marginBottom: '20px' }}
+                style={{ marginBottom: '0px' }}
                 inputProps={{ maxLength: 90 }}
               />
             </Grid>
             <Grid item xs={12}>
-            <select value={category} onChange={handleCategoryChange} className='w-[100%] h-[60px] border rounded-[10px]'>
+          <div className='text-[18px] font-bold mb-2 ml-1'>Module Category<sup className='text-[#ff1b1b]'>*</sup></div>
+            <select value={category} onChange={handleCategoryChange} className='w-[100%] h-[60px]  px-2 border rounded-[10px]'>
              <option> --Select a Option-- </option>
              <option>Interio</option>
              <option>Modular</option>
@@ -122,9 +158,10 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
 
             <Grid item xs={9}>
               {/* YouTube Video URL input */}
+          <div className='text-[18px] font-bold mb-2 ml-1'>Youtube Video Link<sup className='text-[#ff1b1b]'>*</sup></div>
               
               <TextField
-                label="YouTube Video URL * "
+                label="YouTube Video URL  "
                 variant="outlined"
                 fullWidth
                 value={videoUrl}
@@ -145,7 +182,7 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
               {/* Button to add the video with the provided details */}
               {
                 iscreate ?
-              <Button variant="contained" color="success" onClick={handleAddVideo} disabled={!VideoID || !title ||!category}>
+              <Button variant="contained" color="success" onClick={()=>{setIsCreatePopup(true)}} disabled={!VideoID || !title ||!category}>
                 Add
               </Button>
               :
@@ -153,7 +190,7 @@ export default function VideoCreator({Datahandler , editdata ,iscreate ,isedit ,
                }
                 {
                 isedit ?
-              <Button variant="contained" color="success" onClick={handleupdateVideo} disabled={!VideoID || !title ||!category}>
+              <Button variant="contained" color="success" onClick={()=>{setIsEditPopup(true)}} disabled={!VideoID || !title ||!category}>
                 Save
               </Button>
               :

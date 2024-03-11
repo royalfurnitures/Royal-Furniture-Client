@@ -29,6 +29,12 @@ export default function SingleBlog() {
   },[])
 //   console.log("blogdata",blogData);
 
+const PointsHandler = (paragraph)=>{
+  // console.log("point convert habler",paragraph);
+  const points = paragraph?.split('\n\n');
+  return points;
+}
+
   return (
     <>
     {
@@ -43,7 +49,9 @@ export default function SingleBlog() {
                 <h1 className="title text-xl md:text-2xl lg:text-4xl  text-justify gilroyBold text-r-tvoi">{blogData.mainContent1.title}</h1>
             </div>
             <div style={{marginTop: "0px"}}>
-                <h1 className='gilroyMedium text-sm sm:text-xl text-justify pr-4' style={{lineHeight: "30px"}}>{blogData.mainContent1.paragraph}</h1>
+              {
+                 PointsHandler(blogData.mainContent1.paragraph)?.map((item,index)=><h1 className='gilroyMedium text-sm sm:text-xl text-justify pr-4' style={{lineHeight: "30px"}}>{item}</h1>)
+              }
             </div>
             </div>
         </div>
@@ -51,9 +59,11 @@ export default function SingleBlog() {
           blogData?.SubSectionData?.slice(0,2)?.map(blog=>
          <div className='mb-10'>
           <h1 className="title text-xl md:text-2xl lg:text-4xl  text-justify gilroyBold text-r-tvoi">{blog.title}</h1>
-          <div className='gilroyMedium text-sm sm:text-xl text-justify' style={{marginTop: "30px", lineHeight: "30px"}}>
-          {blog.paragraph}
-         </div>
+          {
+              PointsHandler(blog.paragraph)?.map((item,index)=><div className='gilroyMedium text-sm sm:text-xl text-justify' style={{marginTop: "30px", lineHeight: "30px"}}>
+              {item}
+             </div>)
+              }
          </div>)
         }
         
@@ -62,18 +72,23 @@ export default function SingleBlog() {
             <img src={blogData.mainContent2.imageurl[0].URL} className="max-h-70vh md:order-0 m-auto " />
          <div>
          <h1 className="title text-xl md:text-2xl mt-3 lg:text-4xl  text-justify gilroyBold text-r-tvoi">{blogData.mainContent2.title}</h1>
-         <div className='gilroyMedium text-sm sm:text-xl text-justify' style={{marginTop: "30px", lineHeight: "30px"}}>
-          {blogData.mainContent2.paragraph}
-         </div>
+              {
+              PointsHandler(blogData.mainContent2.paragraph)?.map((item,index)=><div className='gilroyMedium text-sm sm:text-xl text-justify' style={{marginTop: "30px", lineHeight: "30px"}}>
+              {item}
+             </div>)
+              }
+         
          </div>
         </div>
         {
           blogData?.SubSectionData.slice(2,)?.map(blog=>
          <div className='mb-10'>
           <h1 className="title text-xl md:text-2xl lg:text-4xl  text-justify gilroyBold text-r-tvoi">{blog.title}</h1>
-          <div className='gilroyMedium text-sm sm:text-xl text-justify' style={{marginTop: "30px", lineHeight: "30px"}}>
-          {blog.paragraph}
-         </div>
+          {
+              PointsHandler(blog.paragraph)?.map((item,index)=><div className='gilroyMedium text-sm sm:text-xl text-justify' style={{marginTop: "30px", lineHeight: "30px"}}>
+              {item}
+             </div>)
+              }
          </div>)
         }
         {/* <Touch image={subs} /> */}

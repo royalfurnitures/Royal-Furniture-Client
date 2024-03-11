@@ -14,6 +14,8 @@ import { GetVideoURL, createVideo , GetallYoutubeVideos, deleteVideo } from "../
 import FrontPage from '../components/commercial/FrontPage';
 import { LiaCertificateSolid } from 'react-icons/lia';
 import {  CardActions } from '@mui/material';
+import Popup from './Popup';
+import { IoMdAdd } from 'react-icons/io';
 
 const Video = () => {
   const [isCreate,setIsCreate] = useState(false);
@@ -21,6 +23,9 @@ const Video = () => {
    const [editData,setEditData] = useState(false);
    const [loading,setLoading] = useState(false);
   const [Videos, setVideos] = useState([]);
+  const [deletedata,setDeleteData] = useState('');
+   const [isDeletePopup,setIsDeletePopup] = useState(false);
+ 
 
   const GetAllVideos = async ()=>{
     let data = await GetallYoutubeVideos(null);
@@ -52,6 +57,13 @@ useEffect(()=>{
     setIsEdit(!isEdit);
    }
 
+   const handleDeletemodel = (action)=>{
+    if(action === true){
+     DeleteHandler(deletedata);
+    }
+    setIsDeletePopup(false);
+  }
+
   return (
     <div className='fixed top-0 bottom-0 left-0 right-0 bg-white z-50'>
       
@@ -61,6 +73,12 @@ useEffect(()=>{
         <FrontPage/>:
         null
        }
+        {
+        isDeletePopup ?
+        <Popup handleModel={handleDeletemodel} isDelete={true} />
+        :
+        null
+      }
       {
           isCreate ? 
           <VideoCreator Datahandler={GetAllVideos} iscreate={true} openHandler={handler} />
@@ -77,9 +95,9 @@ useEffect(()=>{
          
      <div className='lg:ml-[300px]'>
      <div className='relative h-[20px] mt-10 mb-20'>
-             <button className='absolute right-[10px] text-5xl text-white bg-orange-500 px-2  font-bold rounded-lg ' onClick={()=>{setIsCreate(true)}} > + </button>
-          </div>
-     <div className='grid grid-cols-12 gap-[10px] overflow-y-scroll h-[80vh] p-10'> 
+     <button className='fixed bottom-14  right-10  text-2xl  text-[white]  font-bold rounded-lg flex items-center gap-1 ' onClick={()=>{setIsCreate(true)}} > <Button variant="contained"><IoMdAdd/>&nbsp; create </Button> </button>
+     </div>
+     <div className='grid grid-cols-12 gap-[10px] overflow-y-scroll h-[80vh] pb-20 '> 
         {
             Videos.length > 0 && Videos.map(item=>
             <div key={item._id} className='col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-4 '>
@@ -117,7 +135,7 @@ useEffect(()=>{
                       </Typography>
                   </CardContent>
                   <CardActions>
-        <Button size="small" color="warning" onClick={()=>{DeleteHandler(item._id)}}>
+        <Button size="small" color="warning" onClick={()=>{setIsDeletePopup(true) ;setDeleteData(item._id)}}>
           Delete
         </Button>
         <Button size="small" color="primary" onClick={()=>{setEditData(item);Edithandler()}}>

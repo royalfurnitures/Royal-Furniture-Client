@@ -150,7 +150,7 @@ export default function About() {
             expertise in the furniture industry have helped us to maintain.
             </h4>
             {/* <h1 style={{textAlign: "center"}} className='mt-24 text-4xl gilroyEBold text-r-tvoi'>OUR FACTORY</h1> */}
-            <div className='mt-16'>
+            <div className=' mt-24'>
             <h4 className='text-center  text-2xl lg:text-3xl xl:text-3xl text-r-tvoi gilroyBold'>Leadership Team at Royal Furnitures</h4>
             <div className='flex items-center justify-center gap-10 md:flex-row flex-col md:gap-2 lg:gap-10 mt-20 '>
             <div className='flex items-center justify-center flex-col w-[300px] md:w-[250px] lg:w-[400px]'>
@@ -183,7 +183,7 @@ export default function About() {
 
 
             <Container>
-            <div className='py-10'>
+            <div className='py-10 mt-10'>
             <h1 className='text-center gilroyBold text-r-tvoi steps-title text-2xl lg:text-3xl'>The Royal Team</h1>
             <h3 className='text-center gilroyMedium text-r-tvoi steps-sub text-sm  md:text-lg lg:text-xl'>Get to know the team that’ll be with you every step of the way.</h3>
             <div className='grid grid-cols-6 gap-5'>
